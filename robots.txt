@@ -1,3 +1,3 @@
 User-agent: *
 Allow: /
-Sitemap: https://autojablan.hr/sitemap.xml
+Sitemap: https://autojablan.com/sitemap.xml

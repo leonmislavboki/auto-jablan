@@ -23,7 +23,7 @@
 <link rel="canonical" href="https://autojablan.com/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..900&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -61,706 +61,746 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
 :root {
-  --bg-dark:    #060914;
-  --bg-card:    #0E1420;
-  --bg-card2:   #111827;
-  --border:     rgba(255,255,255,0.08);
-  --border-b:   rgba(255,255,255,0.14);
-  --blue:       #1E3A8A;
-  --blue-mid:   #2563EB;
-  --blue-light: #3B82F6;
-  --yellow:     #F5C518;
-  --yellow-d:   #D4A80A;
-  --text:       #F1F5F9;
-  --muted:      #94A3B8;
-  --dim:        #475569;
-  --white:      #FFFFFF;
-  --surface:    rgba(255,255,255,0.04);
+  --bg:       #0C0F14;
+  --bg-2:     #10141A;
+  --surface:  #151A22;
+  --surface-2:#1B212B;
+  --line:     rgba(226,232,240,0.08);
+  --line-2:   rgba(226,232,240,0.16);
+  --text:     #E8EAED;
+  --muted:    #8B93A1;
+  --dim:      #7A8391;
+  --accent:   #F5C518;
+  --accent-d: #DDB00F;
+  --ink:      #12151B;
+  --navy:     #1E3A8A;
+  --shadow:   0 30px 60px -30px rgba(3,6,12,0.85);
+  --ease:     cubic-bezier(0.16, 1, 0.3, 1);
+  --wrap:     1280px;
+  --gut:      clamp(1.25rem, 4vw, 3rem);
+  --z-nav: 100; --z-menu: 90; --z-float: 80; --z-modal: 200; --z-grain: 300;
+  --mono: 'JetBrains Mono', ui-monospace, monospace;
+  --sans: 'Archivo', system-ui, sans-serif;
 }
 
 html { scroll-behavior: smooth; }
-body { background: var(--bg-dark); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 16px; line-height: 1.6; overflow-x: hidden; }
+body {
+  background: var(--bg); color: var(--text);
+  font-family: var(--sans); font-size: 16px; line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+main { overflow-x: clip; }
+body::after {
+  content: ''; position: fixed; inset: 0; pointer-events: none; z-index: var(--z-grain);
+  opacity: 0.05; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+img, video { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+#nav-sentinel { position: absolute; top: 0; left: 0; width: 1px; height: 12px; pointer-events: none; }
+.skip { position: absolute; left: -999px; top: 0; background: var(--accent); color: var(--ink); padding: .6rem 1rem; z-index: 999; font-weight: 700; }
+.skip:focus { left: 1rem; top: 1rem; }
+
+.wrap { max-width: var(--wrap); margin: 0 auto; padding: 0 var(--gut); }
+.mono { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.label {
+  font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--muted); display: inline-flex; align-items: center; gap: .6rem;
+}
+.label::before { content: ''; width: 18px; height: 2px; background: var(--accent); }
+.h2 {
+  font-size: clamp(2rem, 4.4vw, 3.6rem); font-weight: 800; font-stretch: 118%;
+  line-height: 1; letter-spacing: -0.035em; color: #fff; text-wrap: balance;
+}
+.h2 em { font-style: normal; color: var(--accent); }
+.lede { color: var(--muted); font-size: 1.05rem; line-height: 1.7; max-width: 58ch; text-wrap: pretty; }
+
+/* buttons */
+.btn {
+  display: inline-flex; align-items: center; gap: .6rem;
+  background: var(--accent); color: var(--ink);
+  font-family: var(--sans); font-weight: 800; font-size: .95rem; letter-spacing: -0.01em;
+  padding: .95rem 1.4rem; border: 0; border-radius: 4px; cursor: pointer; text-decoration: none;
+  transition: background .25s var(--ease), transform .25s var(--ease);
+}
+.btn svg { transition: transform .3s var(--ease); }
+.btn:hover { background: var(--accent-d); }
+.btn:hover svg { transform: translateX(3px); }
+.btn:active { transform: scale(.98); }
+.tlink {
+  display: inline-flex; align-items: center; gap: .5rem; text-decoration: none;
+  font-family: var(--mono); font-size: .9rem; color: var(--text);
+  border-bottom: 1px solid var(--line-2); padding-bottom: 2px;
+  transition: border-color .25s, color .25s;
+}
+.tlink:hover { color: var(--accent); border-color: var(--accent); }
+
+/* reveal */
+.rv { opacity: 0; transform: translateY(28px); transition: opacity .9s var(--ease), transform .9s var(--ease); transition-delay: calc(var(--i, 0) * 80ms); }
+.rv.in { opacity: 1; transform: none; }
 
 /* ── NAV ── */
-nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
-  background: rgba(6,9,20,0.92); backdrop-filter: blur(20px);
-  border-bottom: 1px solid var(--border);
-  padding: 0 2rem; height: 68px;
-  display: flex; align-items: center; justify-content: space-between;
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: var(--z-nav);
+  height: 72px; display: flex; align-items: center;
+  transition: background .35s, border-color .35s, backdrop-filter .35s;
+  border-bottom: 1px solid transparent;
 }
-.nav-logo { display: flex; align-items: center; gap: 0.65rem; text-decoration: none; }
-.nav-logo-mark {
-  width: 36px; height: 36px; border-radius: 9px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--blue), var(--blue-light));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; font-weight: 800; color: white; letter-spacing: -0.02em;
-}
-.nav-logo-text { font-size: 1rem; font-weight: 700; color: var(--white); }
-.nav-logo-text span { color: var(--yellow); }
-.nav-links { display: flex; gap: 2rem; list-style: none; }
-.nav-links a { color: var(--muted); text-decoration: none; font-size: 0.875rem; font-weight: 500; transition: color 0.2s; }
-.nav-links a:hover { color: var(--white); }
-.nav-right { display: flex; align-items: center; gap: 1rem; }
-.nav-fb { color: var(--muted); display: flex; align-items: center; transition: color 0.2s; }
-.nav-fb:hover { color: #1877F2; }
-.btn-nav {
-  background: var(--yellow); color: var(--blue);
-  padding: 0.5rem 1.2rem; border-radius: 8px;
-  font-weight: 700; font-size: 0.875rem; border: none; cursor: pointer;
-  transition: background 0.2s, transform 0.15s;
-  text-decoration: none; display: inline-block; white-space: nowrap;
-}
-.btn-nav:hover { background: var(--yellow-d); transform: translateY(-1px); }
-
-/* ── HERO ── */
-.hero {
-  min-height: 100vh; padding-top: 68px;
-  display: flex; align-items: center;
-  position: relative; overflow: hidden;
-}
-.orb {
-  position: absolute; border-radius: 50%; pointer-events: none;
-}
-.orb-1 { top: 5%; left: -10%; width: 650px; height: 650px; background: radial-gradient(circle, rgba(30,58,138,0.25) 0%, transparent 65%); }
-.orb-2 { bottom: -10%; right: -5%; width: 550px; height: 550px; background: radial-gradient(circle, rgba(37,99,235,0.15) 0%, transparent 65%); }
-.orb-3 { top: 40%; left: 40%; transform: translate(-50%,-50%); width: 800px; height: 800px; background: radial-gradient(circle, rgba(245,197,24,0.04) 0%, transparent 60%); }
-.hero-inner { position: relative; z-index: 2; max-width: 1200px; margin: 0 auto; padding: 4rem 2rem 5rem; width: 100%; }
-.hero-pill {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--surface); border: 1px solid var(--border-b);
-  padding: 0.4rem 1rem; border-radius: 100px;
-  font-size: 0.8rem; font-weight: 600; margin-bottom: 2rem; color: var(--muted);
-}
-.pill-dot {
-  width: 7px; height: 7px; border-radius: 50%; background: var(--yellow);
-  animation: pulse-dot 2s infinite;
-}
-@keyframes pulse-dot {
-  0%,100% { opacity:1; transform:scale(1); }
-  50% { opacity:0.5; transform:scale(0.7); }
-}
-.hero-title {
-  font-size: clamp(2.8rem, 6vw, 5.5rem); font-weight: 800;
-  line-height: 1.05; letter-spacing: -0.03em; color: var(--white);
-  margin-bottom: 1.5rem;
-}
-.hero-title .grad {
-  background: linear-gradient(90deg, var(--blue-light), var(--yellow));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.hero-desc { font-size: 1.1rem; color: var(--muted); max-width: 540px; margin-bottom: 2.5rem; line-height: 1.75; }
-.hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; margin-bottom: 3.5rem; }
-.btn-primary {
-  background: var(--yellow); color: var(--blue);
-  padding: 0.95rem 2rem; border-radius: 10px;
-  font-weight: 800; font-size: 1rem; border: none; cursor: pointer;
-  box-shadow: 0 4px 20px rgba(245,197,24,0.35);
-  text-decoration: none; display: inline-flex; align-items: center; gap: 0.5rem;
-  transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
-}
-.btn-primary:hover { background: var(--yellow-d); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(245,197,24,0.45); }
-.btn-outline {
-  background: var(--surface); color: var(--text);
-  padding: 0.95rem 2rem; border-radius: 10px;
-  font-weight: 600; font-size: 1rem; border: 1px solid var(--border-b);
-  cursor: pointer; text-decoration: none; display: inline-block;
-  transition: background 0.2s, border-color 0.2s;
-}
-.btn-outline:hover { background: rgba(255,255,255,0.08); border-color: rgba(255,255,255,0.22); }
-.hero-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; }
-.h-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 12px; padding: 1.25rem 1.25rem 1rem;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.h-card:hover { border-color: var(--border-b); transform: translateY(-2px); }
-.h-card-num {
-  font-size: 1.75rem; font-weight: 800; letter-spacing: -0.03em; line-height: 1;
-  color: var(--yellow); margin-bottom: 0.25rem;
-}
-.h-card-label { font-size: 0.77rem; color: var(--muted); font-weight: 500; }
-
-/* ── MARQUEE ── */
-.marquee {
-  padding: 1.1rem 0; overflow: hidden;
-  border-top: 1px solid var(--border); border-bottom: 1px solid var(--border);
-  background: var(--bg-card);
-}
-.mq-track { display: flex; gap: 3rem; animation: mq 28s linear infinite; white-space: nowrap; }
-.mq-item { display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0; }
-.mq-text { font-size: 0.875rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; }
-.mq-dot { width: 5px; height: 5px; border-radius: 50%; background: var(--yellow); }
-@keyframes mq { from { transform:translateX(0); } to { transform:translateX(-50%); } }
-
-/* ── SECTION COMMONS ── */
-.section-eyebrow {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--yellow); margin-bottom: 0.75rem;
-}
-.section-title { font-size: clamp(1.9rem, 3.5vw, 2.9rem); font-weight: 800; color: var(--white); line-height: 1.15; letter-spacing: -0.02em; }
-.section-title .grad {
-  background: linear-gradient(90deg, var(--blue-light), var(--yellow));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
-}
-.section-desc { font-size: 1rem; color: var(--muted); margin-top: 0.75rem; max-width: 480px; line-height: 1.7; }
-
-/* ── SERVICES ── */
-.services { padding: 7rem 2rem; }
-.section-header { max-width: 1200px; margin: 0 auto 3rem; }
-.services-grid {
-  max-width: 1200px; margin: 0 auto;
-  display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem;
-}
-.svc-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 14px; padding: 2rem; position: relative; overflow: hidden;
-  transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-}
-.svc-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue-light), var(--yellow));
-  opacity: 0; transition: opacity 0.25s;
-}
-.svc-card:hover { border-color: rgba(37,99,235,0.35); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-.svc-card:hover::before { opacity: 1; }
-.svc-icon-wrap {
-  width: 48px; height: 48px; border-radius: 10px;
-  background: linear-gradient(135deg, rgba(30,58,138,0.3), rgba(37,99,235,0.15));
-  border: 1px solid rgba(37,99,235,0.25);
-  display: flex; align-items: center; justify-content: center;
-  margin-bottom: 1.25rem; color: var(--blue-light);
-  transition: background 0.2s;
-}
-.svc-card:hover .svc-icon-wrap { background: linear-gradient(135deg, rgba(30,58,138,0.5), rgba(37,99,235,0.3)); }
-.svc-icon-wrap svg { width: 22px; height: 22px; }
-.svc-name { font-size: 1rem; font-weight: 700; color: var(--white); margin-bottom: 0.5rem; }
-.svc-desc { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
-
-/* ── WHY US ── */
-.why-us { padding: 5rem 2rem; border-top: 1px solid var(--border); background: var(--bg-card); }
-.why-grid { max-width: 1200px; margin: 3rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 2rem; }
-.why-item {
-  display: flex; flex-direction: column; align-items: flex-start; gap: 1rem;
-  padding: 2rem; border-radius: 14px;
-  border: 1px solid var(--border); background: var(--bg-dark);
-  transition: border-color 0.2s, transform 0.2s;
-}
-.why-item:hover { border-color: rgba(245,197,24,0.3); transform: translateY(-3px); }
-.why-icon-wrap {
-  width: 52px; height: 52px; border-radius: 12px; flex-shrink: 0;
-  background: linear-gradient(135deg, rgba(245,197,24,0.15), rgba(245,197,24,0.05));
-  border: 1px solid rgba(245,197,24,0.25);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--yellow);
-}
-.why-icon-wrap svg { width: 24px; height: 24px; }
-.why-title { font-size: 1.05rem; font-weight: 700; color: var(--white); }
-.why-text { font-size: 0.875rem; color: var(--muted); line-height: 1.65; }
-
-/* ── ABOUT ── */
-.about { padding: 7rem 2rem; border-top: 1px solid var(--border); }
-.about-inner { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 5rem; align-items: center; }
-.about-text p { color: var(--muted); font-size: 1rem; line-height: 1.85; margin-bottom: 1.25rem; }
-.castrol-badge {
-  display: inline-flex; align-items: center; gap: 0.75rem;
-  background: var(--bg-card); border: 1px solid var(--border-b);
-  padding: 0.75rem 1.25rem; border-radius: 10px; margin-top: 0.5rem; margin-bottom: 2rem;
-}
-.castrol-badge-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--yellow); flex-shrink: 0; }
-.castrol-badge span { font-size: 0.85rem; font-weight: 600; color: var(--muted); }
-.castrol-badge strong { color: var(--yellow); }
-.about-stats { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
-.stat-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 14px; padding: 2rem; text-align: center;
-  transition: border-color 0.2s, transform 0.2s;
-}
-.stat-card:hover { border-color: var(--border-b); transform: translateY(-2px); }
-.stat-num { font-size: 2.75rem; font-weight: 800; letter-spacing: -0.04em; line-height: 1; color: var(--yellow); }
-.stat-label { font-size: 0.78rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.08em; margin-top: 0.5rem; }
-
-/* ── REVIEWS ── */
-.reviews { padding: 7rem 2rem; border-top: 1px solid var(--border); }
-.reviews-grid { max-width: 1200px; margin: 3rem auto 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.25rem; }
-.rev-card {
-  background: var(--bg-card); border: 1px solid var(--border);
-  border-radius: 14px; padding: 2rem; position: relative; overflow: hidden;
-  transition: border-color 0.25s, transform 0.2s, box-shadow 0.25s;
-}
-.rev-card::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 2px;
-  background: linear-gradient(90deg, var(--blue-light), var(--yellow));
-  opacity: 0; transition: opacity 0.25s;
-}
-.rev-card:hover { border-color: rgba(245,197,24,0.3); transform: translateY(-4px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-.rev-card:hover::before { opacity: 1; }
-.rev-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
-.rev-stars svg { width: 18px; height: 18px; fill: var(--yellow); }
-.rev-text { font-size: 0.95rem; color: var(--muted); line-height: 1.75; margin-bottom: 1.5rem; font-style: italic; }
-.rev-author { display: flex; align-items: center; gap: 0.75rem; }
-.rev-avatar {
-  width: 40px; height: 40px; border-radius: 50%; flex-shrink: 0;
-  background: linear-gradient(135deg, rgba(30,58,138,0.4), rgba(37,99,235,0.2));
-  border: 1px solid rgba(37,99,235,0.3);
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.8rem; font-weight: 700; color: var(--blue-light);
-}
-.rev-name { font-size: 0.9rem; font-weight: 700; color: var(--white); }
-.rev-source { font-size: 0.75rem; color: var(--muted); display: flex; align-items: center; gap: 0.3rem; margin-top: 0.15rem; }
-.rev-source svg { width: 12px; height: 12px; }
-
-/* ── CTA STRIP ── */
-.cta-strip {
-  margin: 0 2rem 4rem; border-radius: 20px;
-  background: linear-gradient(135deg, #0A1A4A 0%, #0E1420 50%, #111827 100%);
-  border: 1px solid var(--border-b); position: relative; overflow: hidden;
-}
-.cta-strip::before {
-  content: ''; position: absolute; top: -50%; left: 15%;
-  width: 400px; height: 400px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(37,99,235,0.12) 0%, transparent 70%);
-  pointer-events: none;
-}
-.cta-strip::after {
-  content: ''; position: absolute; bottom: -30%; right: 5%;
-  width: 300px; height: 300px; border-radius: 50%;
-  background: radial-gradient(circle, rgba(245,197,24,0.07) 0%, transparent 70%);
-  pointer-events: none;
-}
-.cta-inner {
-  max-width: 1200px; margin: 0 auto; padding: 3.5rem 3rem;
-  position: relative; z-index: 1;
-  display: grid; grid-template-columns: 1fr auto; gap: 3rem; align-items: center;
-}
-.cta-label { font-size: 0.78rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--yellow); margin-bottom: 0.75rem; }
-.cta-title { font-size: clamp(1.75rem, 3vw, 2.5rem); font-weight: 800; color: var(--white); line-height: 1.2; letter-spacing: -0.02em; margin-bottom: 0.75rem; }
-.cta-sub { color: var(--muted); font-size: 1rem; }
-.cta-right { display: flex; flex-direction: column; gap: 0.75rem; min-width: 210px; }
-.btn-cta {
-  background: var(--yellow); color: var(--blue);
-  padding: 1rem 2rem; border-radius: 10px;
-  font-weight: 800; font-size: 1rem; border: none; cursor: pointer;
-  box-shadow: 0 4px 20px rgba(245,197,24,0.35);
-  text-decoration: none; display: block; text-align: center;
-  transition: background 0.2s, transform 0.15s;
-}
-.btn-cta:hover { background: var(--yellow-d); transform: translateY(-1px); }
-.cta-tel { font-size: 0.875rem; color: var(--muted); text-align: center; }
-.cta-tel a { color: var(--yellow); font-weight: 600; text-decoration: none; }
-.cta-tel a:hover { text-decoration: underline; }
-
-/* ── CONTACT ── */
-.contact { border-top: 1px solid var(--border); }
-.contact-wrap {
-  max-width: 1200px; margin: 0 auto;
-  display: grid; grid-template-columns: 1fr 1.5fr; align-items: stretch; min-height: 380px;
-}
-.contact-info {
-  padding: 3rem 2.5rem; display: flex; flex-direction: column; gap: 1rem; justify-content: center;
-}
-.contact-heading { margin-bottom: 0.25rem; }
-.contact-heading h2 { font-size: 1.5rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; line-height: 1.2; margin-top: 0.3rem; }
-.ci-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--yellow); margin-bottom: 0.2rem; }
-.ci-value { font-size: 0.9rem; font-weight: 600; color: var(--text); }
-.ci-sub { font-size: 0.83rem; color: var(--muted); }
-.contact-map { position: relative; overflow: hidden; min-height: 300px; }
-.contact-map iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; filter: grayscale(40%) invert(90%) hue-rotate(180deg) brightness(0.85) contrast(1.1); }
-
-/* ── FOOTER ── */
-footer {
-  background: var(--bg-card); border-top: 1px solid var(--border);
-  padding: 3.5rem 2rem 2rem;
-}
-.footer-grid {
-  max-width: 1200px; margin: 0 auto;
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 3rem;
-  padding-bottom: 2.5rem; border-bottom: 1px solid var(--border);
-}
-.footer-brand {}
-.footer-logo { display: flex; align-items: center; gap: 0.65rem; margin-bottom: 1rem; text-decoration: none; }
-.footer-logo-mark {
-  width: 34px; height: 34px; border-radius: 8px; flex-shrink: 0;
-  background: linear-gradient(135deg, var(--blue), var(--blue-light));
-  display: flex; align-items: center; justify-content: center;
-  font-size: 0.75rem; font-weight: 800; color: white;
-}
-.footer-logo-text { font-size: 1rem; font-weight: 700; color: var(--white); }
-.footer-logo-text span { color: var(--yellow); }
-.footer-tagline { font-size: 0.875rem; color: var(--muted); line-height: 1.65; margin-bottom: 1.25rem; max-width: 260px; }
-.footer-social { display: flex; gap: 0.75rem; }
-.footer-social a {
-  width: 36px; height: 36px; border-radius: 8px;
-  background: var(--surface); border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  color: var(--muted); text-decoration: none; transition: background 0.2s, border-color 0.2s, color 0.2s;
-}
-.footer-social a:hover { color: var(--white); background: rgba(255,255,255,0.08); border-color: var(--border-b); }
-.footer-col h4 { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.12em; color: var(--yellow); margin-bottom: 1.25rem; }
-.footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 0.65rem; }
-.footer-col ul li a { font-size: 0.875rem; color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.footer-col ul li a:hover { color: var(--white); }
-.footer-col address { font-style: normal; display: flex; flex-direction: column; gap: 0.5rem; }
-.footer-col address span { font-size: 0.875rem; color: var(--muted); display: flex; align-items: flex-start; gap: 0.5rem; line-height: 1.5; }
-.footer-col address a { color: var(--muted); text-decoration: none; transition: color 0.2s; }
-.footer-col address a:hover { color: var(--white); }
-.footer-bottom {
-  max-width: 1200px; margin: 2rem auto 0;
-  display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1rem;
-}
-.footer-bottom p { font-size: 0.8rem; color: var(--dim); }
-.footer-bottom p strong { color: var(--yellow); font-weight: 600; }
-.castrol-tag {
-  display: inline-flex; align-items: center; gap: 0.5rem;
-  background: var(--surface); border: 1px solid var(--border);
-  padding: 0.35rem 0.85rem; border-radius: 6px; font-size: 0.75rem; color: var(--muted); font-weight: 500;
-}
-.castrol-tag span { color: var(--yellow); font-weight: 700; }
-
-/* ── MODAL ── */
-.modal-wrap {
-  display: none; position: fixed; inset: 0; z-index: 9999;
-  align-items: center; justify-content: center; padding: 1rem;
-}
-.modal-backdrop { position: absolute; inset: 0; background: rgba(6,9,20,0.92); }
-.modal-card {
-  position: relative; z-index: 1;
-  background: var(--bg-card); border: 1px solid var(--border-b);
-  border-radius: 16px; box-shadow: 0 32px 80px rgba(0,0,0,0.6);
-  max-width: 560px; width: 100%; max-height: 90vh; overflow-y: auto;
-}
-.modal-topbar { height: 3px; background: linear-gradient(90deg, var(--blue-light), var(--yellow)); border-radius: 16px 16px 0 0; }
-.modal-head { padding: 2rem 2.5rem 1.5rem; display: flex; justify-content: space-between; align-items: flex-start; }
-.modal-head-text small { font-size: 0.72rem; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--yellow); display: block; margin-bottom: 0.35rem; }
-.modal-head-text h3 { font-size: 1.6rem; font-weight: 800; color: var(--white); letter-spacing: -0.02em; line-height: 1.2; }
-.modal-head-text p { font-size: 0.875rem; color: var(--muted); margin-top: 0.25rem; }
-.modal-close {
-  background: var(--surface); border: 1px solid var(--border); border-radius: 8px;
-  width: 36px; height: 36px; display: flex; align-items: center; justify-content: center;
-  cursor: pointer; color: var(--muted); font-size: 1.25rem; flex-shrink: 0;
-  transition: border-color 0.2s, color 0.2s;
-}
-.modal-close:hover { border-color: var(--border-b); color: var(--white); }
-.modal-form { padding: 0 2.5rem 2.5rem; display: flex; flex-direction: column; gap: 1.25rem; }
-.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
-.form-group label {
-  font-size: 0.72rem; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase;
-  color: var(--yellow); display: block; margin-bottom: 0.5rem;
-}
-.form-group input,
-.form-group select,
-.form-group textarea {
-  width: 100%; background: var(--bg-card2); border: 1px solid var(--border);
-  color: var(--text); padding: 0.75rem 1rem; border-radius: 8px;
-  font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; outline: none;
-  transition: border-color 0.2s;
-}
-.form-group input:focus,
-.form-group select:focus,
-.form-group textarea:focus { border-color: rgba(37,99,235,0.5); }
-.form-group textarea { resize: vertical; }
-.form-group select { cursor: pointer; }
-.btn-submit {
-  background: var(--yellow); color: var(--blue);
-  padding: 1rem 2rem; border-radius: 10px;
-  font-family: 'Plus Jakarta Sans', sans-serif; font-weight: 800; font-size: 1rem;
-  border: none; cursor: pointer; box-shadow: 0 4px 20px rgba(245,197,24,0.3);
-  transition: background 0.2s, transform 0.15s; margin-top: 0.5rem;
-}
-.btn-submit:hover { background: var(--yellow-d); transform: translateY(-1px); }
-.modal-fine { font-size: 0.8rem; color: var(--muted); text-align: center; }
-.modal-fine a { color: var(--yellow); text-decoration: none; }
-.modal-success { display: none; padding: 3rem 2.5rem; text-align: center; }
-.success-icon {
-  width: 64px; height: 64px; border-radius: 50%;
-  background: linear-gradient(135deg, var(--blue-light), var(--yellow));
-  margin: 0 auto 1.5rem; display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 8px 24px rgba(245,197,24,0.25);
-}
-.modal-success h3 { font-size: 1.5rem; font-weight: 800; color: var(--white); margin-bottom: 0.75rem; }
-.modal-success p { color: var(--muted); margin-bottom: 2rem; }
-.btn-close-success {
-  background: var(--yellow); color: var(--blue);
-  padding: 0.8rem 2rem; border-radius: 10px;
-  font-weight: 800; border: none; cursor: pointer;
-  transition: background 0.2s;
-}
-.btn-close-success:hover { background: var(--yellow-d); }
-
-/* ── WHATSAPP FLOAT ── */
-.whatsapp-btn {
-  position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 998;
-  width: 54px; height: 54px; background: #25D366; border-radius: 50%;
-  display: flex; align-items: center; justify-content: center;
-  box-shadow: 0 4px 20px rgba(37,211,102,0.5);
-  transition: transform 0.2s, box-shadow 0.2s;
-  text-decoration: none;
-}
-.whatsapp-btn:hover { transform: scale(1.1); box-shadow: 0 6px 28px rgba(37,211,102,0.7); }
-
-/* ── RESPONSIVE ── */
-@media (max-width: 1024px) {
-  .hero-cards { grid-template-columns: repeat(2,1fr); }
-  .about-inner { gap: 3rem; }
-  .footer-grid { grid-template-columns: 1fr 1fr; }
-  .footer-brand { grid-column: 1 / -1; }
-}
-@media (max-width: 768px) {
-  nav { padding: 0 1.25rem; }
-  .nav-links { display: none; }
-  .hero-inner { padding: 3rem 1.25rem 4rem; }
-  .hero-title { font-size: 3.2rem; }
-  .hero-desc { font-size: 1rem; }
-  .hero-cards { grid-template-columns: repeat(2,1fr); }
-  .services { padding: 5rem 1.25rem; }
-  .services-grid { grid-template-columns: 1fr; }
-  .why-us { padding: 4rem 1.25rem; }
-  .why-grid { grid-template-columns: 1fr; gap: 1rem; }
-  .about { padding: 5rem 1.25rem; }
-  .about-inner { grid-template-columns: 1fr; gap: 2.5rem; }
-  .about-stats { grid-template-columns: 1fr 1fr; }
-  .reviews { padding: 5rem 1.25rem; }
-  .reviews-grid { grid-template-columns: 1fr; }
-  .cta-strip { margin: 0 1.25rem 3rem; }
-  .cta-inner { grid-template-columns: 1fr; gap: 1.5rem; padding: 2.5rem 1.5rem; }
-  .cta-right { min-width: 0; }
-  .contact-wrap { grid-template-columns: 1fr; }
-  .contact-info { padding: 2.5rem 1.5rem; }
-  .contact-map { min-height: 260px; }
-  .contact-map iframe { position: static; height: 260px; width: 100%; }
-  footer { padding: 2.5rem 1.25rem 1.5rem; }
-  .footer-grid { grid-template-columns: 1fr; gap: 2rem; }
-  .footer-brand { grid-column: auto; }
-  .footer-bottom { flex-direction: column; align-items: flex-start; }
-  .modal-head { padding: 1.5rem 1.5rem 1.25rem; }
-  .modal-form { padding: 0 1.5rem 1.5rem; }
-  .form-row { grid-template-columns: 1fr; }
-  .modal-success { padding: 2rem 1.5rem; }
-  .section-header { padding: 0 0; }
-}
-@media (max-width: 480px) {
-  .hero-title { font-size: 2.6rem; }
-  .hero-cards { grid-template-columns: 1fr 1fr; }
-  .h-card-num { font-size: 1.4rem; }
-  .hero-actions { flex-direction: column; align-items: stretch; }
-  .btn-primary, .btn-outline { text-align: center; justify-content: center; }
-}
-
-/* ── MOBILE NAV ── */
-.hamburger {
-  display: none; flex-direction: column; justify-content: center; gap: 5px;
-  width: 40px; height: 40px; background: none; border: none; cursor: pointer;
-  padding: 6px;
-}
-.hamburger span {
-  display: block; height: 2px; background: var(--text);
-  border-radius: 2px; transition: transform 0.25s, opacity 0.2s;
-}
+.nav.solid { background: rgba(12,15,20,.86); backdrop-filter: blur(14px); border-color: var(--line); }
+.nav .wrap { display: flex; align-items: center; justify-content: space-between; width: 100%; }
+.nav-logo img { height: 52px; width: auto; }
+.nav-links { display: flex; gap: 2.2rem; list-style: none; }
+.nav-links a { color: var(--muted); text-decoration: none; font-size: .9rem; font-weight: 500; transition: color .2s; }
+.nav-links a:hover { color: #fff; }
+.nav-right { display: flex; align-items: center; gap: 1.1rem; }
+.nav-ig { color: var(--muted); display: flex; padding: 12px; margin: -12px; transition: color .2s; }
+.nav-ig:hover { color: #fff; }
+.nav .btn { padding: .6rem 1rem; font-size: .85rem; }
+.hamburger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 40px; height: 40px; background: none; border: 0; cursor: pointer; padding: 8px; }
+.hamburger span { display: block; height: 2px; background: var(--text); transition: transform .25s, opacity .2s; }
 .hamburger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
 .hamburger.open span:nth-child(2) { opacity: 0; }
 .hamburger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
-
 .mobile-menu {
-  display: none; position: fixed; top: 68px; left: 0; right: 0; bottom: 0;
-  background: rgba(6,9,20,0.98); backdrop-filter: blur(20px);
-  z-index: 199; flex-direction: column; align-items: center; justify-content: center;
-  gap: 0;
+  display: none; position: fixed; inset: 72px 0 0 0; z-index: var(--z-menu);
+  background: var(--bg); flex-direction: column; padding: 1.5rem var(--gut);
 }
 .mobile-menu.open { display: flex; }
-.mobile-menu a {
-  color: var(--text); text-decoration: none; font-size: 1.5rem; font-weight: 700;
-  padding: 1rem 2rem; width: 100%; text-align: center;
-  border-bottom: 1px solid var(--border); transition: color 0.2s;
+.mobile-menu a:not(.btn) {
+  color: #fff; text-decoration: none; font-size: 2rem; font-weight: 800; font-stretch: 115%; letter-spacing: -0.03em;
+  padding: .9rem 0; border-bottom: 1px solid var(--line); display: flex; justify-content: space-between; align-items: baseline;
 }
-.mobile-menu a:hover { color: var(--yellow); }
-.mobile-menu .btn-menu-cta {
-  margin-top: 2rem; background: var(--yellow); color: var(--blue);
-  border-radius: 10px; font-size: 1.1rem; border-bottom: none;
-  padding: 0.9rem 2.5rem; width: auto;
+.mobile-menu a:not(.btn) span { font-family: var(--mono); font-size: .8rem; color: var(--dim); font-weight: 400; letter-spacing: 0; }
+.mobile-menu .btn { margin-top: 2rem; justify-content: center; }
+
+/* ── HERO ── */
+.hero { min-height: 100dvh; padding: 120px 0 0; border-bottom: 1px solid var(--line); display: flex; flex-direction: column; position: relative; }
+.hero::before {
+  content: ''; position: absolute; inset: 0; pointer-events: none;
+  background:
+    linear-gradient(var(--line) 1px, transparent 1px) 0 0 / 100% 120px;
+  mask-image: linear-gradient(180deg, transparent, #000 30%, #000 70%, transparent);
+  opacity: .5;
+}
+.hero-grid {
+  flex: 1; display: grid; grid-template-columns: 1.15fr .85fr; gap: clamp(2rem, 5vw, 5rem);
+  align-items: center; position: relative;
+}
+.hero > .wrap { width: 100%; }
+.hero h1 {
+  font-size: clamp(2.6rem, 6.3vw, 5.1rem); font-weight: 850; font-stretch: 122%;
+  line-height: .92; letter-spacing: -0.045em; color: #fff; margin-bottom: 1.75rem;
+}
+.hero h1 .ln { display: block; overflow: hidden; padding-bottom: .06em; }
+.hero h1 .ln > span { display: inline-block; transform: translateY(105%); transition: transform 1.1s var(--ease); }
+.hero h1 .ln:nth-child(2) > span { transition-delay: .09s; }
+.hero h1 .ln:nth-child(3) > span { transition-delay: .18s; }
+.loaded .hero h1 .ln > span { transform: none; }
+.hero h1 .hl { color: var(--accent); }
+.hero .lede { margin-bottom: 2.25rem; }
+.hero-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem 2rem; }
+.hero-fade { opacity: 0; transform: translateY(16px); transition: opacity 1s var(--ease) .45s, transform 1s var(--ease) .45s; }
+.loaded .hero-fade { opacity: 1; transform: none; }
+
+.hero-media { position: relative; align-self: stretch; display: flex; align-items: center; }
+.hero-frame {
+  position: relative; width: 100%; aspect-ratio: 4 / 5; overflow: hidden; border-radius: 6px;
+  clip-path: inset(0 0 100% 0); transition: clip-path 1.4s var(--ease) .25s;
+  box-shadow: var(--shadow);
+}
+.loaded .hero-frame { clip-path: inset(0 0 0 0); }
+.hero-frame img {
+  width: 100%; height: 100%; object-fit: cover; object-position: 62% 60%;
+  filter: grayscale(.35) contrast(1.08) brightness(.82);
+  transform: scale(1.14); transition: transform 2.2s var(--ease) .25s;
+}
+.loaded .hero-frame img { transform: scale(1); }
+.hero-frame::after {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(200deg, transparent 45%, rgba(12,15,20,.85));
+}
+.hero-cap {
+  position: absolute; left: 1.1rem; bottom: 1rem; right: 1.1rem; z-index: 2;
+  font-family: var(--mono); font-size: .75rem; color: rgba(232,234,237,.8); letter-spacing: .04em;
+  display: flex; justify-content: space-between; gap: 1rem;
+}
+.corner { position: absolute; width: 56px; height: 56px; border: 0 solid var(--accent); z-index: 2; }
+.corner.tl { top: -10px; left: -10px; border-top-width: 3px; border-left-width: 3px; }
+.corner.br { bottom: -10px; right: -10px; border-bottom-width: 3px; border-right-width: 3px; }
+
+.hero-strip {
+  margin-top: clamp(3rem, 6vh, 5rem); border-top: 1px solid var(--line);
+  display: grid; grid-template-columns: repeat(4, 1fr); position: relative;
+}
+.hero-strip > div { padding: 1.4rem 0 1.6rem; border-right: 1px solid var(--line); padding-right: 1rem; }
+.hero-strip > div + div { padding-left: 1.5rem; }
+.hero-strip > div:last-child { border-right: 0; }
+.hs-num { font-family: var(--mono); font-size: clamp(1.3rem, 2.2vw, 1.75rem); font-weight: 700; color: #fff; line-height: 1.1; }
+.hs-lab { font-size: .82rem; color: var(--muted); margin-top: .3rem; }
+
+/* ── SERVICES ── */
+.services { padding: clamp(5rem, 11vw, 9rem) 0 clamp(5rem, 10vw, 8rem); }
+.sec-head { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem 4rem; align-items: end; margin-bottom: clamp(3rem, 6vw, 4.5rem); }
+.sec-head .label { margin-bottom: 1.25rem; }
+.svc-list { display: grid; grid-template-columns: 1fr 1fr; column-gap: clamp(2rem, 5vw, 5rem); border-top: 1px solid var(--line); }
+.svc {
+  position: relative; display: grid; grid-template-columns: 3.2rem 1fr auto; gap: .25rem 1rem; align-items: start;
+  padding: 1.6rem 0 1.7rem; border-bottom: 1px solid var(--line); text-decoration: none; color: inherit;
+}
+.svc::before {
+  content: ''; position: absolute; left: 0; bottom: -1px; height: 2px; width: 100%;
+  background: var(--accent); transform: scaleX(0); transform-origin: left; transition: transform .5s var(--ease);
+}
+.svc:hover::before { transform: scaleX(1); }
+.svc-no { font-family: var(--mono); font-size: .8rem; color: var(--dim); padding-top: .35rem; transition: color .3s; }
+.svc:hover .svc-no { color: var(--accent); }
+.svc h3 { font-size: 1.3rem; font-weight: 750; font-stretch: 108%; letter-spacing: -0.02em; color: #fff; line-height: 1.25; }
+.svc p { grid-column: 2; color: var(--muted); font-size: .93rem; line-height: 1.6; max-width: 46ch; }
+.svc-add {
+  grid-row: 1; grid-column: 3; align-self: start;
+  display: inline-flex; align-items: center; white-space: nowrap; min-height: 40px;
+  font-family: var(--mono); font-size: .75rem; letter-spacing: .04em;
+  color: var(--text); background: transparent; border: 1px solid var(--line-2); border-radius: 4px;
+  padding: .5rem .75rem; cursor: pointer;
+  transition: background .25s, color .25s, border-color .25s, transform .2s var(--ease);
+}
+.svc-add:hover { border-color: var(--accent); color: var(--accent); }
+.svc-add:active { transform: scale(.97); }
+.svc-add .on-txt, .svc-add[aria-pressed="true"] .off-txt { display: none; }
+.svc-add[aria-pressed="true"] .on-txt { display: inline; }
+.svc-add[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--ink); }
+.svc.picked::before { transform: scaleX(1); }
+.svc.picked .svc-no { color: var(--accent); }
+.svc p a { color: var(--text); text-decoration: none; border-bottom: 1px solid var(--accent); white-space: nowrap; }
+.svc p a:hover { color: var(--accent); }
+.svc-tag {
+  display: inline-block; margin-left: .5rem; vertical-align: middle;
+  font-family: var(--mono); font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase;
+  color: var(--ink); background: var(--accent); padding: .2rem .4rem; border-radius: 2px; transform: translateY(-2px);
 }
 
-@media (max-width: 768px) {
+/* ── DYNO ── */
+.dyno { background: var(--bg-2); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); position: relative; }
+.dyno-pin { min-height: 100dvh; display: flex; align-items: center; padding: 5.5rem 0 2rem; background: var(--bg-2); }
+.dyno-grid { display: grid; grid-template-columns: .82fr 1.18fr; gap: clamp(2rem, 5vw, 5rem); align-items: center; width: 100%; }
+.dyno-copy .label { margin-bottom: 1.25rem; }
+.dyno-copy .h2 { font-size: clamp(2rem, 3.4vw, 3rem); margin-bottom: 1rem; }
+.dyno-copy .lede { font-size: 1rem; margin-bottom: 1.75rem; }
+.dyno-list { list-style: none; }
+.dyno-list li { display: flex; gap: .7rem; padding: .55rem 0; line-height: 1.4; border-bottom: 1px solid var(--line); font-size: .95rem; color: var(--text); }
+.dyno-list li::before { content: '+'; font-family: var(--mono); color: var(--accent); font-weight: 700; }
+.dyno-more { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem clamp(2rem, 5vw, 5rem); align-items: start; padding-bottom: clamp(4rem, 8vw, 6rem); }
+.remap-box { border-top: 1px solid var(--line-2); padding-top: 1.1rem; }
+.remap-box h3 { font-size: 1.15rem; font-weight: 750; font-stretch: 108%; color: var(--accent); letter-spacing: -0.01em; margin-bottom: .35rem; }
+.remap-box p { font-size: .95rem; line-height: 1.6; color: var(--muted); max-width: 56ch; }
+.dyno-why { font-size: 1.15rem; font-weight: 750; font-stretch: 108%; letter-spacing: -0.01em; color: #fff; padding-top: 1.1rem; border-top: 1px solid var(--line-2); margin-bottom: .25rem; }
+.dyno-foot { display: flex; align-items: center; gap: 1.25rem; flex-wrap: wrap; }
+
+.dyno-panel { background: var(--bg); border: 1px solid var(--line); border-radius: 8px; padding: 1.25rem 1.25rem 1rem; box-shadow: var(--shadow); }
+.dp-head { display: flex; justify-content: space-between; align-items: center; gap: 1rem; flex-wrap: wrap; margin-bottom: .75rem; }
+.dp-title { font-family: var(--mono); font-size: .75rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.dp-title b { color: #fff; font-weight: 500; }
+.legend { display: flex; gap: 1rem; font-family: var(--mono); font-size: .75rem; color: var(--muted); flex-wrap: wrap; }
+.legend i { display: inline-block; width: 16px; height: 2px; vertical-align: middle; margin-right: .35rem; }
+.dyno svg { width: 100%; height: auto; display: block; overflow: visible; }
+.ax text { font-family: var(--mono); font-size: 11px; fill: var(--dim); }
+.readout { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--line); margin-top: .5rem; }
+.readout > div { padding: .9rem .25rem .2rem; }
+.readout > div + div { border-left: 1px solid var(--line); padding-left: 1rem; }
+.ro-lab { font-family: var(--mono); font-size: .75rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; }
+.ro-val { font-family: var(--mono); font-size: clamp(1.5rem, 3vw, 2.3rem); font-weight: 700; color: #fff; line-height: 1.15; }
+.ro-val.acc { color: var(--accent); }
+.ro-sub { font-family: var(--mono); font-size: .75rem; color: var(--muted); }
+.ro-delta { display: inline-block; margin-left: .35rem; font-size: .75rem; color: var(--ink); background: var(--accent); padding: 0 .3rem; border-radius: 2px; opacity: 0; transform: translateY(4px); transition: opacity .4s, transform .4s var(--ease); vertical-align: middle; }
+.dyno.done .ro-delta { opacity: 1; transform: none; }
+.dp-note { font-size: .78rem; color: var(--dim); margin-top: .9rem; line-height: 1.5; }
+
+/* ── CJENIK ── */
+.sr-only { position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.pricing { padding: clamp(5rem, 10vw, 8rem) 0; }
+.price-draft { display: inline-block; font-family: var(--mono); font-size: .8rem; color: var(--accent); border: 1px dashed var(--accent); border-radius: 4px; padding: .55rem .85rem; margin-bottom: 1.5rem; }
+.price-draft[hidden] { display: none; }
+.price-table { width: 100%; border-collapse: collapse; border-top: 1px solid var(--line-2); }
+.price-table th, .price-table td { padding: 1.25rem .75rem; border-bottom: 1px solid var(--line); text-align: left; vertical-align: baseline; }
+.price-table th:first-child, .price-table td:first-child { padding-left: 0; }
+.price-table th:last-child, .price-table td:last-child { padding-right: 0; }
+.price-table thead th { font-family: var(--mono); font-size: .75rem; font-weight: 500; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); padding-top: 1rem; padding-bottom: 1rem; }
+.price-table .num { text-align: right; white-space: nowrap; }
+.price-table tbody tr { transition: background .25s; }
+.price-table tbody tr:hover { background: var(--bg-2); }
+.price-table tbody th { font-size: 1.1rem; font-weight: 750; font-stretch: 108%; letter-spacing: -0.015em; color: #fff; }
+.price-table tbody th small { display: block; font-family: var(--mono); font-size: .75rem; font-weight: 400; color: var(--muted); letter-spacing: 0; }
+.p-now { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: 1.15rem; font-weight: 700; color: #fff; }
+.p-anchor { font-family: var(--mono); font-variant-numeric: tabular-nums; font-size: .95rem; color: var(--muted); }
+.p-quote { font-size: .93rem; color: var(--muted); white-space: normal; }
+.price-foot { display: grid; grid-template-columns: 1fr auto; gap: 1.5rem 3rem; align-items: start; margin-top: 2rem; }
+.price-notes { display: grid; gap: .6rem; max-width: 72ch; }
+.price-notes p { font-size: .85rem; line-height: 1.6; color: var(--muted); }
+.price-notes strong { color: var(--text); font-weight: 600; }
+.price-links { display: flex; flex-direction: column; align-items: flex-start; gap: 0 1.5rem; }
+.price-links .tlink { padding-top: 1.1rem; }
+.p-sale { display: block; margin-top: .25rem; font-family: var(--mono); font-size: .75rem; color: var(--accent); white-space: normal; }
+
+/* ── WHY ── */
+.why { padding: clamp(5rem, 10vw, 8rem) 0; }
+.why-head { max-width: 760px; margin-bottom: clamp(2.5rem, 5vw, 4rem); }
+.why-head .label { margin-bottom: 1.25rem; }
+.why-head .h2 { margin-bottom: 1.25rem; }
+.why-row { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border-top: 1px solid var(--line-2); }
+.why-item { padding: 1.75rem 1.5rem 0 0; }
+.why-item + .why-item { padding-left: 1.5rem; border-left: 1px solid var(--line); }
+.why-no { font-family: var(--mono); font-size: 3rem; font-weight: 700; color: var(--dim); line-height: 1; margin-bottom: 1.25rem; transition: color .4s; }
+.why-item:hover .why-no { color: var(--accent); }
+.why-item h3 { font-size: 1.15rem; font-weight: 750; font-stretch: 108%; color: #fff; letter-spacing: -0.015em; margin-bottom: .6rem; line-height: 1.25; }
+.why-item p { color: var(--muted); font-size: .93rem; line-height: 1.65; }
+
+/* ── GALLERY ── */
+.gallery { padding: clamp(4rem, 8vw, 6rem) 0 clamp(5rem, 10vw, 8rem); border-top: 1px solid var(--line); }
+.gal-head { display: flex; justify-content: space-between; align-items: end; gap: 2rem; margin-bottom: 2.5rem; flex-wrap: wrap; }
+.gal-head .label { margin-bottom: 1.25rem; }
+.bento { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 210px; grid-auto-flow: dense; gap: 10px; }
+.tile { position: relative; overflow: hidden; border-radius: 4px; background: var(--surface); }
+.tile.w2 { grid-column: span 2; }
+.tile.h2 { grid-row: span 2; }
+.tile img, .tile video { width: 100%; height: 100%; object-fit: cover; transition: transform .9s var(--ease), filter .5s; }
+.tile img { cursor: zoom-in; filter: saturate(.85); }
+.tile:hover img { transform: scale(1.04); filter: saturate(1); }
+.tile button { all: unset; display: block; width: 100%; height: 100%; cursor: zoom-in; }
+.tile button:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+.tile .vid-tag { position: absolute; top: .6rem; left: .6rem; font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; background: rgba(12,15,20,.75); color: var(--text); padding: .2rem .45rem; border-radius: 2px; pointer-events: none; }
+
+.lightbox { position: fixed; inset: 0; z-index: var(--z-modal); background: rgba(8,10,14,.95); display: none; align-items: center; justify-content: center; padding: 4rem 4.5rem; }
+.lightbox.open { display: flex; }
+.lightbox img { max-width: 100%; max-height: 100%; object-fit: contain; border-radius: 4px; }
+.lb-btn { position: absolute; background: var(--surface); border: 1px solid var(--line-2); color: var(--text); width: 44px; height: 44px; border-radius: 4px; cursor: pointer; display: grid; place-items: center; transition: background .2s, color .2s; }
+.lb-btn:hover { background: var(--accent); color: var(--ink); }
+.lb-close { top: 1rem; right: 1rem; }
+.lb-prev { left: 1rem; top: 50%; transform: translateY(-50%); }
+.lb-next { right: 1rem; top: 50%; transform: translateY(-50%); }
+.lb-count { position: absolute; bottom: 1.25rem; left: 50%; transform: translateX(-50%); font-family: var(--mono); font-size: .75rem; color: var(--muted); }
+
+/* ── ABOUT ── */
+.about { padding: clamp(5rem, 10vw, 8rem) 0; border-top: 1px solid var(--line); background: var(--bg-2); }
+.about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(2.5rem, 6vw, 6rem); align-items: center; }
+.about-media { position: relative; }
+.about-img { aspect-ratio: 5 / 6; overflow: hidden; border-radius: 6px; box-shadow: var(--shadow); }
+.about-img img { width: 100%; height: 100%; object-fit: cover; object-position: 38% 60%; filter: grayscale(.25) contrast(1.05); }
+.about-img-2 {
+  position: absolute; left: -1.5rem; top: -2rem; width: 34%; aspect-ratio: 4/5; overflow: hidden; border-radius: 4px;
+  border: 6px solid var(--bg-2); box-shadow: var(--shadow);
+}
+.about-img-2 img { width: 100%; height: 100%; object-fit: cover; }
+.about-text .label { margin-bottom: 1.25rem; }
+.about-text .h2 { margin-bottom: 1.75rem; }
+.about-text p { color: var(--muted); line-height: 1.8; margin-bottom: 1.1rem; max-width: 56ch; }
+.pull {
+  margin: 2rem 0; padding: 0 0 0 1.5rem; border-left: 3px solid var(--accent);
+  font-size: 1.15rem; line-height: 1.55; color: #fff; font-weight: 500; font-stretch: 104%; max-width: 50ch;
+}
+.pull cite { display: block; margin-top: .75rem; font-style: normal; font-family: var(--mono); font-size: .75rem; color: var(--muted); letter-spacing: .06em; text-transform: uppercase; }
+.castrol-line { font-family: var(--mono); font-size: .8rem; color: var(--muted); margin-bottom: 2rem; }
+.castrol-line b { color: var(--accent); font-weight: 500; }
+
+/* ── REVIEWS ── */
+.reviews { padding: clamp(5rem, 10vw, 8rem) 0; border-top: 1px solid var(--line); }
+.reviews > .wrap > .label { margin-bottom: 1.25rem; }
+.rev-car { margin-top: 3rem; border-top: 1px solid var(--line-2); padding-top: 2rem; }
+.rev-slides { display: grid; gap: 3rem; }
+.rev-slide { margin: 0; }
+.rev-slide blockquote { font-size: clamp(1.35rem, 2.5vw, 2rem); font-weight: 600; font-stretch: 104%; line-height: 1.3; letter-spacing: -0.02em; color: #fff; margin: 1.25rem 0 2rem; max-width: 46ch; text-wrap: pretty; }
+.js-car .rev-slides { gap: 0; touch-action: pan-y; }
+.js-car .rev-slide { grid-area: 1 / 1; opacity: 0; transform: translateX(28px); visibility: hidden; transition: opacity .6s var(--ease), transform .8s var(--ease), visibility 0s .6s; }
+.js-car .rev-slide.aktivan { opacity: 1; transform: none; visibility: visible; transition-delay: 0s; }
+.rev-ctrl { display: none; justify-content: space-between; align-items: center; gap: 1.5rem; margin-top: 2.5rem; }
+.js-car .rev-ctrl { display: flex; }
+.rev-dots { display: flex; flex-wrap: wrap; gap: .25rem; }
+.rev-dot { position: relative; width: 44px; height: 32px; padding: 0; background: none; border: 0; cursor: pointer; }
+.rev-dot::before, .rev-dot::after { content: ''; position: absolute; left: 4px; right: 4px; top: 50%; height: 3px; margin-top: -1.5px; border-radius: 2px; }
+.rev-dot::before { background: var(--line-2); }
+.rev-dot::after { background: var(--accent); transform: scaleX(0); transform-origin: left; }
+.rev-dot:hover::before { background: var(--muted); }
+.rev-dot[aria-current="true"]::after { animation: rev-fill 7s linear forwards; }
+.rev-car.pauza .rev-dot[aria-current="true"]::after { animation-play-state: paused; }
+.rev-car.rucno .rev-dot[aria-current="true"]::after { animation: none; transform: scaleX(1); }
+@keyframes rev-fill { to { transform: scaleX(1); } }
+.rev-arrows { display: flex; gap: .5rem; }
+.rev-btn { width: 44px; height: 44px; display: grid; place-items: center; background: none; border: 1px solid var(--line-2); border-radius: 4px; color: var(--text); cursor: pointer; transition: color .2s, border-color .2s, transform .2s var(--ease); }
+.rev-btn:hover { color: var(--accent); border-color: var(--accent); }
+.rev-btn:active { transform: scale(.96); }
+.stars { display: flex; gap: 3px; }
+.stars svg { width: 15px; height: 15px; fill: var(--accent); }
+.who { display: flex; align-items: center; gap: .8rem; }
+.av { width: 40px; height: 40px; border-radius: 10px; background: var(--surface-2); border: 1px solid var(--line-2); display: grid; place-items: center; font-family: var(--mono); font-size: .78rem; color: var(--text); }
+.who-n { font-weight: 700; color: #fff; font-size: .95rem; }
+.who-s { font-size: .75rem; color: var(--muted); display: flex; align-items: center; gap: .35rem; }
+.who-s svg { width: 12px; height: 12px; }
+
+/* ── CTA ── */
+.cta { background: var(--accent); color: var(--ink); position: relative; overflow: hidden; }
+.cta-in { display: grid; grid-template-columns: 1.2fr auto; gap: 2rem 4rem; align-items: center; padding-block: clamp(3.5rem, 7vw, 5.5rem); position: relative; }
+.cta h2 { font-size: clamp(2rem, 4.2vw, 3.4rem); font-weight: 850; font-stretch: 118%; letter-spacing: -0.04em; line-height: 1; text-wrap: balance; }
+.cta p { margin-top: 1rem; font-weight: 500; max-width: 48ch; }
+.cta-right { display: flex; flex-direction: column; gap: 1rem; align-items: flex-start; }
+.cta-tel { font-family: var(--mono); font-size: clamp(1.4rem, 2.8vw, 2.1rem); font-weight: 700; text-decoration: none; color: var(--ink); border-bottom: 3px solid var(--ink); line-height: 1.2; }
+.cta-tel:hover { opacity: .75; }
+.btn.dark { background: var(--ink); color: var(--accent); }
+.btn.dark:hover { background: #1F242D; }
+
+/* ── CONTACT ── */
+.contact { border-bottom: 1px solid var(--line); }
+.contact-grid { display: grid; grid-template-columns: .9fr 1.1fr; min-height: 480px; }
+.contact-info { padding: clamp(3.5rem, 7vw, 5rem) clamp(1.5rem, 4vw, 4rem) clamp(3.5rem, 7vw, 5rem) 0; }
+.contact-info .label { margin-bottom: 1.25rem; }
+.contact-info .h2 { font-size: clamp(1.9rem, 3.4vw, 2.8rem); margin-bottom: 2.5rem; }
+.ci { display: grid; grid-template-columns: 7.5rem 1fr; gap: 1rem; padding: 1rem 0; border-top: 1px solid var(--line); }
+.ci:last-of-type { border-bottom: 1px solid var(--line); }
+.ci-k { font-family: var(--mono); font-size: .75rem; color: var(--dim); text-transform: uppercase; letter-spacing: .08em; padding-top: .2rem; }
+.ci-v { color: #fff; font-weight: 500; }
+.ci-v a { text-decoration: none; transition: color .2s; }
+.ci-v a:hover { color: var(--accent); }
+.ci-v small { display: block; color: var(--muted); font-size: .85rem; font-weight: 400; }
+.contact-info .btn { margin-top: 2rem; }
+.contact-map { position: relative; min-height: 360px; border-left: 1px solid var(--line); }
+.contact-map iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; filter: grayscale(60%) invert(90%) hue-rotate(180deg) brightness(.85) contrast(1.1); }
+
+/* ── FOOTER ── */
+footer { padding: 3.5rem 0 2rem; }
+.foot-top { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: 2.5rem; padding-bottom: 2.5rem; border-bottom: 1px solid var(--line); }
+.foot-top img { height: 50px; width: auto; margin-bottom: 1rem; }
+.foot-tag { color: var(--muted); font-size: .9rem; max-width: 34ch; margin-bottom: 1.25rem; }
+.foot-social { display: flex; gap: .6rem; }
+.foot-social a { width: 38px; height: 38px; border: 1px solid var(--line-2); border-radius: 4px; display: grid; place-items: center; color: var(--muted); transition: color .2s, border-color .2s; }
+.foot-social a:hover { color: var(--accent); border-color: var(--accent); }
+.foot-col h3 { font-family: var(--mono); font-size: .75rem; font-weight: 500; letter-spacing: .1em; text-transform: uppercase; color: var(--dim); margin-bottom: 1.1rem; }
+.foot-col ul { list-style: none; display: grid; gap: .55rem; }
+.foot-col a, .foot-col li { color: var(--muted); text-decoration: none; font-size: .9rem; transition: color .2s; }
+.foot-col a:hover { color: #fff; }
+.foot-bot { display: flex; justify-content: space-between; flex-wrap: wrap; gap: 1rem; padding-top: 1.75rem; font-size: .8rem; color: var(--dim); }
+.foot-bot a { color: var(--muted); text-decoration: none; }
+.foot-bot a:hover { color: var(--accent); }
+.foot-bot .mono b { color: var(--accent); font-weight: 500; }
+
+/* ── WHATSAPP ── */
+.wa { position: fixed; right: 1.25rem; bottom: 1.25rem; z-index: var(--z-float); width: 54px; height: 54px; border-radius: 14px; background: #25D366; display: grid; place-items: center; box-shadow: 0 14px 28px -12px rgba(3,6,12,.9); transition: transform .3s var(--ease); }
+.wa:hover { transform: translateY(-3px); }
+.wa:active { transform: scale(.96); }
+
+/* ── TRAKA UPITA ── */
+.upit-bar {
+  position: fixed; left: 50%; bottom: 1.25rem; z-index: var(--z-float);
+  display: flex; align-items: center; gap: .75rem; width: max-content; max-width: min(680px, calc(100vw - 11rem));
+  background: var(--surface); border: 1px solid var(--line-2); border-radius: 8px; box-shadow: var(--shadow);
+  padding: .5rem .5rem .5rem 1rem;
+  transform: translate(-50%, 150%); opacity: 0; visibility: hidden;
+  transition: transform .45s var(--ease), opacity .3s, visibility 0s .45s;
+}
+.upit-bar.show { transform: translate(-50%, 0); opacity: 1; visibility: visible; transition-delay: 0s; }
+.ub-txt { min-width: 0; font-size: .88rem; color: var(--text); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.ub-txt b { font-family: var(--mono); color: var(--ink); background: var(--accent); border-radius: 3px; padding: 0 .35rem; margin: 0 .4rem 0 .3rem; }
+.upit-bar .btn { padding: .65rem 1rem; font-size: .85rem; flex-shrink: 0; }
+.ub-clear { flex-shrink: 0; width: 40px; height: 40px; display: grid; place-items: center; background: none; border: 1px solid var(--line-2); border-radius: 4px; color: var(--muted); cursor: pointer; transition: color .2s, border-color .2s; }
+.ub-clear:hover { color: #fff; border-color: var(--text); }
+
+/* ── MODAL ── */
+.modal-wrap { display: none; position: fixed; inset: 0; z-index: var(--z-modal); align-items: center; justify-content: center; padding: 1rem; }
+.modal-wrap.open { display: flex; }
+.modal-backdrop { position: absolute; inset: 0; background: rgba(8,10,14,.88); backdrop-filter: blur(4px); }
+.modal-card { position: relative; background: var(--surface); border: 1px solid var(--line-2); border-radius: 8px; box-shadow: var(--shadow); max-width: 560px; width: 100%; max-height: 92vh; overflow-y: auto; animation: pop .45s var(--ease); }
+@keyframes pop { from { opacity: 0; transform: translateY(14px) scale(.98); } }
+.modal-head { padding: 1.75rem 2rem 1.25rem; display: flex; justify-content: space-between; gap: 1rem; border-bottom: 1px solid var(--line); }
+.modal-head small { font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--accent); }
+.modal-head h3 { font-size: 1.6rem; font-weight: 800; font-stretch: 115%; letter-spacing: -0.03em; color: #fff; line-height: 1.15; margin-top: .3rem; }
+.modal-head p { color: var(--muted); font-size: .88rem; margin-top: .3rem; }
+.modal-close { background: none; border: 1px solid var(--line-2); border-radius: 4px; width: 38px; height: 38px; color: var(--muted); font-size: 1.3rem; cursor: pointer; flex-shrink: 0; transition: color .2s, border-color .2s; }
+.modal-close:hover { color: #fff; border-color: var(--text); }
+.modal-form { padding: 1.5rem 2rem 2rem; display: flex; flex-direction: column; gap: 1.1rem; }
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; }
+.fg { display: flex; flex-direction: column; gap: .45rem; }
+.fg label, .fg legend { font-family: var(--mono); font-size: .75rem; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.fg input, .fg select, .fg textarea {
+  width: 100%; background: var(--bg); border: 1px solid var(--line-2); color: var(--text);
+  padding: .8rem .9rem; border-radius: 4px; font-family: var(--sans); font-size: .95rem; outline: none;
+  transition: border-color .2s;
+}
+.fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--accent); }
+.fg textarea { resize: vertical; }
+.fg .err { font-size: .78rem; color: #F0876B; display: none; }
+fieldset.fg { border: 0; padding: 0; margin: 0; min-width: 0; }
+fieldset.fg legend { padding: 0; margin-bottom: .45rem; }
+.fg .hint { font-size: .82rem; color: var(--muted); margin: -.25rem 0 .2rem; }
+.chip-group { display: flex; flex-wrap: wrap; gap: .45rem; }
+.chip {
+  font-family: var(--sans); font-size: .85rem; color: var(--text); background: var(--bg);
+  border: 1px solid var(--line-2); border-radius: 4px; padding: .5rem .75rem; min-height: 40px; cursor: pointer;
+  transition: background .2s, color .2s, border-color .2s, transform .2s var(--ease);
+}
+.chip:hover { border-color: var(--accent); }
+.chip:active { transform: scale(.97); }
+.chip[aria-pressed="true"] { background: var(--accent); border-color: var(--accent); color: var(--ink); font-weight: 600; }
+.chip[aria-pressed="true"]::before { content: '\2713\00a0'; }
+.fg.bad .chip:not([aria-pressed="true"]) { border-color: #F0876B; }
+.fg.bad input, .fg.bad select { border-color: #F0876B; }
+.fg.bad .err { display: block; }
+.modal-form .btn { justify-content: center; margin-top: .4rem; }
+.modal-form .btn[disabled] { opacity: .6; cursor: wait; }
+.modal-fine { font-size: .82rem; color: var(--muted); text-align: center; }
+.modal-fine a { color: var(--accent); text-decoration: none; }
+.modal-success { display: none; padding: 2.5rem 2rem; }
+.modal-success h3 { font-size: 1.5rem; font-weight: 800; font-stretch: 112%; color: #fff; margin: 1rem 0 .6rem; letter-spacing: -0.02em; }
+.modal-success p { color: var(--muted); margin-bottom: 1.75rem; }
+.modal-success h3 svg { display: inline-block; vertical-align: -3px; margin-right: .5rem; }
+
+/* ── RESPONSIVE ── */
+@media (max-width: 1100px) {
+  .nav-links .nav-opt { display: none; }
+}
+/* niski laptop ekrani (npr. 1366x768): zbijeniji dyno da stane u zaključani ekran */
+@media (min-width: 901px) and (max-height: 760px) {
+  .dyno-pin { padding: 4.75rem 0 1rem; }
+  .dyno-panel { padding: .9rem 1rem .75rem; }
+  .dyno-panel svg { max-height: 300px; }
+  .ro-val { font-size: 1.6rem; }
+  .readout > div { padding-top: .6rem; }
+  .dp-note { margin-top: .5rem; }
+}
+@media (max-width: 1024px) {
+  .nav-links { gap: 1.4rem; }
+  .why-row { grid-template-columns: 1fr 1fr; }
+  .why-item:nth-child(3) { border-left: 0; padding-left: 0; }
+  .why-item { padding-bottom: 2rem; }
+  .bento { grid-template-columns: repeat(3, 1fr); }
+  .foot-top { grid-template-columns: 1fr 1fr; }
+  .foot-top > :first-child { grid-column: 1 / -1; }
+}
+@media (max-width: 900px) {
+  .nav-links, .nav-right .btn { display: none; }
   .hamburger { display: flex; }
-  .nav-right .btn-nav { display: none; }
+  .hero { padding-top: 100px; }
+  .hero h1 { font-size: min(calc((100vw - 3rem) / 8), 4.5rem); }
+  .hero-grid, .sec-head, .svc-list, .dyno-grid, .about-grid, .cta-in, .contact-grid { grid-template-columns: 1fr; }
+  .hero-media { order: -1; }
+  .hero-frame { aspect-ratio: 16 / 10; }
+  .hero-strip { grid-template-columns: 1fr 1fr; }
+  .hero-strip > div:nth-child(2) { border-right: 0; }
+  .hero-strip > div:nth-child(3) { padding-left: 0; border-top: 1px solid var(--line); }
+  .hero-strip > div:nth-child(4) { border-top: 1px solid var(--line); }
+  .dyno-pin { min-height: 0; padding: 5rem 0; }
+  .dyno-more { grid-template-columns: 1fr; padding-top: 0; }
+  .about-media { margin: 2rem 1rem 0 1.5rem; }
+  .contact-info { padding-right: 0; }
+  .contact-map { border-left: 0; border-top: 1px solid var(--line); margin: 0 calc(var(--gut) * -1); }
 }
-
-/* ── REMAP SPOTLIGHT ── */
-.remap-section { padding: 6rem 2rem; border-top: 1px solid var(--border); }
-.remap-inner { max-width: 1100px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
-.remap-text-col .section-eyebrow { margin-bottom: 0.75rem; }
-.remap-desc { color: var(--muted); margin: 1rem 0 2rem; line-height: 1.7; }
-.remap-service-box { background: var(--bg-card); border: 1px solid var(--border-b); border-radius: 16px; padding: 1.5rem; margin-bottom: 1.5rem; }
-.remap-service-name { font-weight: 700; font-size: 1.05rem; margin-bottom: 0.5rem; color: var(--yellow); }
-.remap-service-desc { color: var(--muted); font-size: 0.925rem; line-height: 1.65; }
-.remap-why-col { background: linear-gradient(135deg, var(--blue) 0%, #1a2f6e 100%); border-radius: 20px; padding: 2.5rem; border: 1px solid rgba(59,130,246,0.3); }
-.remap-why-title { font-size: 1.4rem; font-weight: 800; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 0.5rem; }
-.remap-why-list { list-style: none; display: flex; flex-direction: column; gap: 0.85rem; }
-.remap-why-list li { display: flex; align-items: flex-start; gap: 0.65rem; color: rgba(255,255,255,0.9); font-size: 0.95rem; line-height: 1.5; }
-.remap-why-list li::before { content: "\2714\fe0e"; color: var(--yellow); font-weight: 700; flex-shrink: 0; margin-top: 0.1rem; }
-@media (max-width: 768px) {
-  .remap-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+@media (max-width: 640px) {
+  .ro-delta { display: block; width: fit-content; margin: .3rem 0 0; }
+  .ro-val { font-size: 1.45rem; }
+  .ro-sub { font-size: .7rem; }
+  .rev-dots { flex: 1; flex-wrap: nowrap; gap: 0; min-width: 0; }
+  .rev-dot { flex: 1 1 0; width: auto; min-width: 0; height: 44px; }
+  .rev-dot::before, .rev-dot::after { left: 3px; right: 3px; }
+  .svc { grid-template-columns: 2.4rem 1fr; }
+  .svc p { grid-row: 2; }
+  .svc-add { grid-row: 3; grid-column: 2; justify-self: start; margin-top: .75rem; }
+  .upit-bar { left: .75rem; right: calc(1.25rem + 54px + .6rem); width: auto; max-width: none; transform: translateY(150%); padding-left: .8rem; }
+  .upit-bar.show { transform: none; }
+  .ub-txt { font-size: .82rem; }
+  .ub-list { display: none; }
+  .price-table thead { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+  .price-table, .price-table tbody, .price-table tr { display: block; }
+  .price-table tbody tr { padding: 1.1rem 0; border-bottom: 1px solid var(--line); }
+  .price-table tbody th, .price-table tbody td { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; padding: .2rem 0; border: 0; text-align: left; }
+  .price-table tbody th { display: block; margin-bottom: .35rem; }
+  .price-table tbody td::before { content: attr(data-label); font-family: var(--mono); font-size: .75rem; color: var(--muted); text-transform: uppercase; letter-spacing: .06em; }
+  .price-table tbody td.quote { display: block; text-align: left; }
+  .price-table tbody td.quote::before { content: none; }
+  .price-foot { grid-template-columns: 1fr; }
+  .price-links { flex-direction: row; flex-wrap: wrap; }
+  .price-table tbody th { font-size: 1.05rem; }
+  .why-row { grid-template-columns: 1fr; }
+  .why-item, .why-item + .why-item { border-left: 0; padding-left: 0; border-top: 1px solid var(--line); padding-top: 1.5rem; }
+  .why-item:first-child { border-top: 0; }
+  .bento { grid-template-columns: 1fr 1fr; grid-auto-rows: 170px; }
+  .tile.w2.h2 { grid-row: span 2; }
+  .form-row { grid-template-columns: 1fr; }
+  .modal-head, .modal-form { padding-left: 1.25rem; padding-right: 1.25rem; }
+  .readout > div + div { padding-left: .6rem; }
+  .ci { grid-template-columns: 1fr; gap: .2rem; }
+  .foot-top { grid-template-columns: 1fr; }
+  .lightbox { padding: 4rem .75rem; }
+  .lb-prev, .lb-next { top: auto; bottom: 1rem; transform: none; }
+  .about-img-2 { left: -1rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; }
+  .rv { opacity: 1; transform: none; }
 }
 </style>
 </head>
 <body>
+<span id="nav-sentinel" aria-hidden="true"></span>
+<a class="skip" href="#main">Preskoči na sadržaj</a>
 
 <!-- NAV -->
-<nav>
-  <a href="#" class="nav-logo">
-    <img src="autojablan-logo-removebg-preview.png" alt="Auto Jablan" style="height:56px;width:auto;display:block;">
-  </a>
-  <ul class="nav-links">
-    <li><a href="#usluge">Usluge</a></li>
-    <li><a href="#galerija">Galerija</a></li>
-    <li><a href="#o-nama">O nama</a></li>
-    <li><a href="#recenzije">Recenzije</a></li>
-    <li><a href="#kontakt">Kontakt</a></li>
-  </ul>
-  <div class="nav-right">
-    <a href="https://www.instagram.com/auto_jablan?utm_source=qr&igsh=eGh3aGh3dzNmcjJl" target="_blank" rel="noopener" aria-label="Instagram" class="nav-fb">
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-    </a>
-    <a href="#" class="btn-nav" onclick="openModal(event)">Zakažite termin</a>
-    <button class="hamburger" id="hamburger" aria-label="Izbornik" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </button>
+<header class="nav" id="nav">
+  <div class="wrap">
+    <a href="#" class="nav-logo" aria-label="Auto Jablan, početak"><img src="autojablan-logo-removebg-preview.png" alt="Auto Jablan"></a>
+    <nav aria-label="Glavna navigacija">
+      <ul class="nav-links">
+        <li><a href="#usluge">Usluge</a></li>
+        <li><a href="#chip-tuning">Chip tuning</a></li>
+        <li><a href="#cjenik">Cjenik</a></li>
+        <li><a href="#galerija">Galerija</a></li>
+        <li><a href="#o-nama">O nama</a></li>
+        <li class="nav-opt"><a href="#recenzije">Recenzije</a></li>
+        <li><a href="#kontakt">Kontakt</a></li>
+      </ul>
+    </nav>
+    <div class="nav-right">
+      <a href="https://www.instagram.com/auto_jablan?utm_source=qr&igsh=eGh3aGh3dzNmcjJl" target="_blank" rel="noopener" aria-label="Instagram" class="nav-ig">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg>
+      </a>
+      <a href="#" class="btn" onclick="openModal(event)">Naručite termin</a>
+      <button class="hamburger" id="hamburger" aria-label="Izbornik" aria-expanded="false" aria-controls="mobile-menu" onclick="toggleMenu()">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
   </div>
-</nav>
+</header>
 
 <div class="mobile-menu" id="mobile-menu">
-  <a href="#usluge" onclick="closeMenu()">Usluge</a>
-  <a href="#galerija" onclick="closeMenu()">Galerija</a>
-  <a href="#o-nama" onclick="closeMenu()">O nama</a>
-  <a href="#recenzije" onclick="closeMenu()">Recenzije</a>
-  <a href="#kontakt" onclick="closeMenu()">Kontakt</a>
-  <a href="#" class="btn-menu-cta" onclick="closeMenu();openModal(event);">Zakažite termin</a>
+  <a href="#usluge" onclick="closeMenu()">Usluge <span>01</span></a>
+  <a href="#chip-tuning" onclick="closeMenu()">Chip tuning <span>02</span></a>
+  <a href="#cjenik" onclick="closeMenu()">Cjenik <span>03</span></a>
+  <a href="#galerija" onclick="closeMenu()">Galerija <span>04</span></a>
+  <a href="#o-nama" onclick="closeMenu()">O nama <span>05</span></a>
+  <a href="#recenzije" onclick="closeMenu()">Recenzije <span>06</span></a>
+  <a href="#kontakt" onclick="closeMenu()">Kontakt <span>07</span></a>
+  <a href="#" class="btn" onclick="closeMenu();openModal(event);">Naručite termin</a>
 </div>
 
+<main id="main">
+
 <!-- HERO -->
-<section class="hero">
-  <div class="orb orb-1"></div>
-  <div class="orb orb-2"></div>
-  <div class="orb orb-3"></div>
-  <div class="hero-inner">
-    <h1 class="hero-title">
-      Vaš pouzdani<br>
-      <span class="grad">auto servis</span><br>
-      od 1994
-    </h1>
-    <p class="hero-desc">Stručni tim mehaničara, najmodernija dijagnostička oprema i transparentne cijene. Vaše vozilo u najboljim rukama.</p>
-    <div class="hero-actions">
-      <a href="#" class="btn-primary" onclick="openModal(event)">
-        Zakažite termin
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-      </a>
-      <a href="#usluge" class="btn-outline">Naše usluge</a>
+<section class="hero" id="top">
+  <div class="wrap hero-grid">
+    <div class="hero-copy">
+      <h1>
+        <span class="ln"><span>Vaš pouzdani</span></span>
+        <span class="ln"><span class="hl">auto servis</span></span>
+        <span class="ln"><span>od 1994</span></span>
+      </h1>
+      <p class="lede hero-fade">Servis, dijagnostika i chip tuning u Retkovcu. Mehanika, elektrika, klime, gume i vuča na jednom mjestu, a remap motora vam pokažemo na grafu, prije i poslije.</p>
+      <div class="hero-actions hero-fade">
+        <a href="#" class="btn" onclick="openModal(event)">
+          Naručite termin
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12l-7.5 7.5M21 12H3"/></svg>
+        </a>
+        <a href="tel:+385913441665" class="tlink">091 344 1665</a>
+      </div>
     </div>
-    <div class="hero-cards">
-      <div class="h-card"><div class="h-card-num">32+</div><div class="h-card-label">Godina iskustva</div></div>
-      <div class="h-card"><div class="h-card-num">5000+</div><div class="h-card-label">Zadovoljnih klijenata</div></div>
-      <div class="h-card"><div class="h-card-num">24/7</div><div class="h-card-label">Vuča vozila</div></div>
-      <div class="h-card"><div class="h-card-num">11+</div><div class="h-card-label">Vrsta usluga</div></div>
+    <div class="hero-media">
+      <span class="corner tl" aria-hidden="true"></span>
+      <div class="hero-frame">
+        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.43.19%20%281%29.jpeg" alt="Upravljačka jedinica motora spojena na uređaj za čitanje u radionici Auto Jablan" fetchpriority="high">
+        <div class="hero-cap"><span>ECU na stolu, čitanje softvera</span><span>Castrol Service · VII Retkovec 1/1</span></div>
+      </div>
+      <span class="corner br" aria-hidden="true"></span>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="hero-strip hero-fade">
+      <div><div class="hs-num">1994.</div><div class="hs-lab">otvorili smo radionicu</div></div>
+      <div><div class="hs-num">5000+</div><div class="hs-lab">zadovoljnih klijenata</div></div>
+      <div><div class="hs-num">0-24</div><div class="hs-lab">vučna služba</div></div>
+      <div><div class="hs-num">Sub 8-12</div><div class="hs-lab">radimo i subotom</div></div>
     </div>
   </div>
 </section>
-
-<!-- MARQUEE -->
-<div class="marquee">
-  <div class="mq-track">
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Automehanika</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Autoelektrika</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Auto klime</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Profesionalna dijagnostika</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Optika kotača</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Vučna služba 24/7</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Vulkanizacija</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Chip tuning / Remap</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Adblue · DPF · EGR</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Automehanika</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Autoelektrika</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Auto klime</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Profesionalna dijagnostika</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Optika kotača</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Vučna služba 24/7</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Vulkanizacija</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Chip tuning / Remap</span></div>
-    <div class="mq-item"><span class="mq-dot"></span><span class="mq-text">Adblue · DPF · EGR</span></div>
-  </div>
-</div>
 
 <!-- SERVICES -->
 <section class="services" id="usluge">
-  <div class="section-header">
-    <div class="section-eyebrow">Naše usluge</div>
-    <h2 class="section-title">Sve što vaše vozilo <span class="grad">treba</span></h2>
-    <p class="section-desc">Od redovnog servisa do hitnih popravaka, pokrivamo sve mehaničke i elektroničke potrebe vašeg vozila.</p>
-  </div>
-  <div class="services-grid">
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M11.42 15.17L17.25 21A2.652 2.652 0 0021 17.25l-5.877-5.877M11.42 15.17l2.496-3.03c.317-.384.74-.626 1.208-.766M11.42 15.17l-4.655 5.653a2.548 2.548 0 11-3.586-3.586l6.837-5.63m5.108-.233c.55-.164 1.163-.188 1.743-.14a4.5 4.5 0 004.486-6.336l-3.276 3.277a3.004 3.004 0 01-2.25-2.25l3.276-3.276a4.5 4.5 0 00-6.336 4.486c.091 1.076-.071 2.264-.904 2.95l-.102.085m-1.745 1.437L5.909 7.5H4.5L2.25 3.75l1.5-1.5L7.5 4.5v1.409l4.26 4.26m-1.745 1.437l1.745-1.437m6.615 8.206L15.75 15.75M4.867 19.125h.008v.008h-.008v-.008z"/></svg></div>
-      <div class="svc-name">Automehanika</div>
-      <p class="svc-desc">Sveobuhvatan popravak motora, mjenjača, ovjesa i kočnica uz garantirano kvalitetne originalne dijelove.</p>
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="label rv">Usluge</div>
+        <h2 class="h2 rv" style="--i:1">Devet stvari koje radimo <em>svaki dan.</em></h2>
+      </div>
+      <p class="lede rv" style="--i:2">Od zamjene ulja do vuče s autoceste. Ako nešto od ovoga ne radimo sami, reći ćemo vam tko to radi dobro.</p>
     </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/></svg></div>
-      <div class="svc-name">Autoelektrika</div>
-      <p class="svc-desc">Dijagnostika i popravak električne instalacije, akumulatora, alternatora, startera i senzora vozila.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z"/></svg></div>
-      <div class="svc-name">Auto klime</div>
-      <p class="svc-desc">Punjenje, dijagnostika i popravak auto klima uređaja. Provjera svih komponenti rashladnog sustava.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0H3"/></svg></div>
-      <div class="svc-name">Profesionalna dijagnostika</div>
-      <p class="svc-desc">Napredna OBD dijagnostika za brzo i precizno otkrivanje kvarova u elektronici i motoru vašeg vozila.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="3"/><path stroke-linecap="round" d="M12 3v2M12 19v2M3 12h2M19 12h2"/></svg></div>
-      <div class="svc-name">Optika kotača</div>
-      <p class="svc-desc">Računalno centriranje kotača i kontrola geometrije ovjesa za sigurnu vožnju i smanjenu potrošnju guma.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12"/></svg></div>
-      <div class="svc-name">Vučna služba 24/7</div>
-      <p class="svc-desc">Brza i sigurna vuča vozila na cijelom području Hrvatske u bilo koje doba dana i noći.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="4.5"/><path stroke-linecap="round" d="M12 2v2.5M12 19.5V22M2 12h2.5M19.5 12H22"/></svg></div>
-      <div class="svc-name">Vulkanizacija</div>
-      <p class="svc-desc">Montaža, demontaža i računalno balansiranje guma. Popravak i zamjena pneumatika svih vrsta i dimenzija.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9.594 3.94c.09-.542.56-.94 1.11-.94h2.593c.55 0 1.02.398 1.11.94l.213 1.281c.063.374.313.686.645.87.074.04.147.083.22.127.324.196.72.257 1.075.124l1.217-.456a1.125 1.125 0 011.37.49l1.296 2.247a1.125 1.125 0 01-.26 1.431l-1.003.827c-.293.24-.438.613-.431.992a6.759 6.759 0 010 .255c-.007.378.138.75.43.99l1.005.828c.424.35.534.954.26 1.43l-1.298 2.247a1.125 1.125 0 01-1.369.491l-1.217-.456c-.355-.133-.75-.072-1.076.124a6.57 6.57 0 01-.22.128c-.331.183-.581.495-.644.869l-.213 1.28c-.09.543-.56.941-1.11.941h-2.594c-.55 0-1.02-.398-1.11-.94l-.213-1.281c-.062-.374-.312-.686-.644-.87a6.52 6.52 0 01-.22-.127c-.325-.196-.72-.257-1.076-.124l-1.217.456a1.125 1.125 0 01-1.369-.49l-1.297-2.247a1.125 1.125 0 01.26-1.431l1.004-.827c.292-.24.437-.613.43-.992a6.932 6.932 0 010-.255c.007-.378-.138-.75-.43-.99l-1.004-.828a1.125 1.125 0 01-.26-1.43l1.297-2.247a1.125 1.125 0 011.37-.491l1.216.456c.356.133.751.072 1.076-.124.072-.044.146-.087.22-.128.332-.183.582-.495.644-.869l.214-1.281z"/><path stroke-linecap="round" stroke-linejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"/></svg></div>
-      <div class="svc-name">Chip Tuning / Remap motora Zagreb</div>
-      <p class="svc-desc">Profesionalni chip tuning i remap Stage 1 ECU upravljačke jedinice u Zagrebu. Povećanje snage i momenta, smanjenje potrošnje goriva za benzinske i diesel motore.</p>
-    </div>
-    <div class="svc-card">
-      <div class="svc-icon-wrap"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.73 0 2.813-1.874 1.948-3.374L13.949 3.378c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126zM12 15.75h.007v.008H12v-.008z"/></svg></div>
-      <div class="svc-name">Adblue · DPF · EGR rješenja</div>
-      <p class="svc-desc">Softversko rješenje sustava Adblue, DPF filtera i EGR ventila. Pouzdano i prilagođeno vašem vozilu.</p>
+    <div class="svc-list">
+      <article class="svc rv"><span class="svc-no">01</span><h3>Automehanika</h3><button class="svc-add" type="button" data-pod="Automehanika" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Motor, mjenjač, ovjes i kočnice. Redovni servis radimo s Castrol uljima.</p></article>
+      <article class="svc rv"><span class="svc-no">02</span><h3>Autoelektrika</h3><button class="svc-add" type="button" data-pod="Autoelektrika" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Akumulator, alternator, anlaser, senzori i instalacija. Tražimo kvar dok ga ne nađemo.</p></article>
+      <article class="svc rv"><span class="svc-no">03</span><h3>Auto klime</h3><button class="svc-add" type="button" data-pod="Auto klime" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Punjenje, provjera curenja i popravak. Najbolje prije ljeta, ne usred njega.</p></article>
+      <article class="svc rv"><span class="svc-no">04</span><h3>Profesionalna dijagnostika</h3><button class="svc-add" type="button" data-pod="Profesionalna dijagnostika" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Računalno čitanje grešaka iz motora i elektronike. Radimo i subotom ujutro.</p></article>
+      <article class="svc rv"><span class="svc-no">05</span><h3>Optika kotača</h3><button class="svc-add" type="button" data-pod="Optika kotača" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Geometrija ovjesa kad auto vuče u stranu ili guma troši samo jedan rub.</p></article>
+      <article class="svc rv"><span class="svc-no">06</span><h3>Vučna služba 0-24</h3><button class="svc-add" type="button" data-pod="Vučna služba" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Auto je stao? Nazovite. Vučemo s cijelog područja Hrvatske, danju i noću.</p></article>
+      <article class="svc rv"><span class="svc-no">07</span><h3>Vulkanizacija</h3><button class="svc-add" type="button" data-pod="Vulkanizacija" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Montaža, balansiranje i krpanje guma svih dimenzija.</p></article>
+      <article class="svc rv"><span class="svc-no">08</span><h3>Chip tuning / Remap motora Zagreb <span class="svc-tag">Stage 1</span></h3><button class="svc-add" type="button" data-pod="Chip tuning / Remap motora" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Remap ECU jedinice za benzince i dizelaše. Više snage i momenta, mapa rađena za vaš motor. <a href="#chip-tuning">Pogledajte primjer na grafu</a></p></article>
+      <article class="svc rv"><span class="svc-no">09</span><h3>Adblue · DPF · EGR rješenja</h3><button class="svc-add" type="button" data-pod="Adblue / DPF / EGR rješenja" aria-pressed="false"><span class="off-txt">+ U upit</span><span class="on-txt">&#10003; U upitu</span></button><p>Softversko rješenje sustava Adblue, DPF filtera i EGR ventila, prilagođeno vozilu.</p></article>
     </div>
   </div>
 </section>
 
-<!-- REMAP SPOTLIGHT -->
-<section class="remap-section">
-  <div class="remap-inner">
-    <div class="remap-text-col">
-      <div class="section-eyebrow">Softverska optimizacija</div>
-      <h2 class="section-title">Profesionalna <span class="grad">optimizacija vozila</span></h2>
-      <p class="remap-desc">Specijalizirani smo za napredna softverska rješenja i optimizaciju rada motora kako bismo vašem vozilu pružili bolju iskoristivost, uglađen rad i maksimalne performanse u skladu s vašim potrebama.</p>
-      <div class="remap-service-box">
-        <div class="remap-service-name">Softverska optimizacija motora (remap)</div>
-        <p class="remap-service-desc">Poboljšanje snage, momenta i odziva gasa kroz profesionalnu kalibraciju originalnog ECU softvera. Svaka prilagodba izrađuje se individualno prema modelu vozila i stanju motora.</p>
+<!-- REMAP + DYNO -->
+<section class="dyno" id="chip-tuning">
+  <div class="dyno-pin">
+    <div class="wrap dyno-grid">
+      <div class="dyno-copy">
+        <div class="label rv">Softverska optimizacija</div>
+        <h2 class="h2 rv" style="--i:1">Profesionalna <em>optimizacija vozila.</em></h2>
+        <p class="lede rv" style="--i:2">Specijalizirani smo za napredna softverska rješenja i optimizaciju rada motora kako bismo vašem vozilu pružili bolju iskoristivost, uglađen rad i maksimalne performanse u skladu s vašim potrebama.</p>
+        <div class="dyno-foot rv" style="--i:4">
+          <a href="#" class="btn" onclick="openModal(event, 'Chip tuning / Remap motora')">Pitajte za svoj auto</a>
+        </div>
       </div>
-      <a href="#kontakt" class="btn-primary" onclick="openModal(); return false;">Zakažite termin</a>
+
+      <div class="dyno-panel rv" style="--i:2">
+        <div class="dp-head">
+          <div class="dp-title">Dyno <b>/ primjer 2.0 TDI 150 KS</b></div>
+          <div class="legend">
+            <span><i style="background:var(--accent)"></i>Stage 1 KS</span>
+            <span><i style="background:#fff"></i>Stage 1 Nm</span>
+            <span><i style="height:0;border-top:2px dashed var(--dim)"></i>Serijski</span>
+          </div>
+        </div>
+        <svg id="dyno-svg" viewBox="0 0 620 350" role="img" aria-label="Graf snage i momenta: serijski oko 150 KS i 340 Nm, nakon Stage 1 remapa oko 184 KS i 400 Nm">
+          <defs>
+            <clipPath id="reveal"><rect id="reveal-rect" x="0" y="0" width="620" height="350"/></clipPath>
+            <linearGradient id="pw-fill" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#F5C518" stop-opacity=".22"/>
+              <stop offset="1" stop-color="#F5C518" stop-opacity="0"/>
+            </linearGradient>
+          </defs>
+          <g class="ax" id="axes"></g>
+          <path id="st-nm" fill="none" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <path id="st-kw" fill="none" stroke="#5B6472" stroke-width="1.5" stroke-dasharray="4 4"/>
+          <g clip-path="url(#reveal)">
+            <path id="tu-fill" fill="url(#pw-fill)"/>
+            <path id="tu-nm" fill="none" stroke="#fff" stroke-width="2.25" stroke-linecap="round"/>
+            <path id="tu-kw" fill="none" stroke="#F5C518" stroke-width="3" stroke-linecap="round"/>
+          </g>
+          <line id="scan" y1="24" y2="310" stroke="rgba(245,197,24,.45)" stroke-width="1"/>
+          <circle id="dot-nm" r="4" fill="#fff"/>
+          <circle id="dot-kw" r="6" fill="#F5C518" stroke="#0C0F14" stroke-width="2"/>
+        </svg>
+        <div class="readout" aria-hidden="true">
+          <div><div class="ro-lab">Okretaji</div><div class="ro-val" id="ro-rpm">1000</div><div class="ro-sub">o/min</div></div>
+          <div><div class="ro-lab">Snaga</div><div class="ro-val acc"><span id="ro-kw">0</span><span class="ro-delta" id="d-kw"></span></div><div class="ro-sub">serijski <span id="ro-kw-s">0</span> KS</div></div>
+          <div><div class="ro-lab">Moment</div><div class="ro-val"><span id="ro-nm">0</span><span class="ro-delta" id="d-nm"></span></div><div class="ro-sub">serijski <span id="ro-nm-s">0</span> Nm</div></div>
+        </div>
+        <p class="dp-note">Primjer tipičnog Stage 1 remapa. Točan dobitak ovisi o motoru i stanju auta, zato mjerimo prije i poslije.</p>
+      </div>
     </div>
-    <div class="remap-why-col">
-      <div class="remap-why-title">Zašto mi?</div>
-      <ul class="remap-why-list">
+  </div>
+  <div class="wrap dyno-more">
+    <div class="remap-box rv">
+      <h3>Softverska optimizacija motora (remap)</h3>
+      <p>Poboljšanje snage, momenta i odziva gasa kroz profesionalnu kalibraciju originalnog ECU softvera. Svaka prilagodba izrađuje se individualno prema modelu vozila i stanju motora.</p>
+    </div>
+    <div class="rv" style="--i:1">
+      <h3 class="dyno-why">Zašto mi?</h3>
+      <ul class="dyno-list">
         <li>Brutalna preciznost softvera</li>
         <li>Mapa izrađena posebno za vaše vozilo</li>
         <li>Osjetna razlika u snazi i odzivu</li>
@@ -771,461 +811,723 @@ footer {
   </div>
 </section>
 
+<!-- CJENIK (podaci: cjenik.js) -->
+<section class="pricing" id="cjenik" aria-labelledby="cjenik-title">
+  <div class="wrap">
+    <div class="sec-head">
+      <div>
+        <div class="label rv">Cjenik</div>
+        <h2 class="h2 rv" id="cjenik-title" style="--i:1">Cjenik <em>usluga.</em></h2>
+      </div>
+      <p class="lede rv" style="--i:2">Cijene za usluge koje se mogu odrediti unaprijed. Za ostalo dajemo ponudu kad pogledamo auto.</p>
+    </div>
+    <p class="price-draft" id="price-draft" hidden>Primjer cijena. Ovo nisu stvarne cijene obrta.</p>
+    <table class="price-table" id="price-table" role="table">
+      <caption class="sr-only">Cjenik usluga Auto Jablan: aktualna i sidrena cijena u eurima</caption>
+      <thead role="rowgroup">
+        <tr role="row">
+          <th scope="col" role="columnheader">Usluga</th>
+          <th scope="col" role="columnheader" class="num">Cijena</th>
+          <th scope="col" role="columnheader" class="num">Sidrena cijena <span class="js-anchor-paren"></span></th>
+        </tr>
+      </thead>
+      <tbody id="price-body" role="rowgroup"></tbody>
+    </table>
+    <noscript><p class="p-quote" style="margin-top:1rem">Za prikaz cjenika uključite JavaScript ili nas nazovite na +385 91 344 1665.</p></noscript>
+    <div class="price-foot">
+      <div class="price-notes">
+        <p><strong>Sidrena cijena</strong> predstavlja referentnu cijenu usluge prema važećim pravilima. Za detalje i primjenjive uvjete pogledajte cjenik. Referentni datum: <span class="js-anchor-date"></span>.</p>
+        <p>Za usluge čija cijena ovisi o modelu vozila, potrebnim dijelovima ili opsegu radova, konačna cijena određuje se nakon pregleda vozila.</p>
+        <p>Cijene su izražene u eurima i uključuju PDV. Za usluge čija cijena ovisi o konkretnom vozilu i opsegu radova, konačna cijena može se razlikovati od informativne cijene navedene u cjeniku.</p>
+      </div>
+      <div class="price-links">
+        <a class="tlink" href="cjenik.csv" download="cjenik-auto-jablan.csv" type="text/csv">Preuzmi cjenik (CSV)</a>
+        <a class="tlink" href="cjenik/">Arhiva cjenika</a>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- WHY US -->
-<section class="why-us">
-  <div class="section-header">
-    <div class="section-eyebrow">Zašto Auto Jablan</div>
-    <h2 class="section-title">Vaše vozilo zaslužuje <span class="grad">najbolje</span></h2>
-    <p class="section-desc">Tri desetljeća iskustva, suvremena oprema i iskrena briga za svaki automobil koji dođe k nama.</p>
-  </div>
-  <div class="why-grid">
-    <div class="why-item">
-      <div class="why-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z"/></svg>
-      </div>
-      <div class="why-title">32+ godina iskustva</div>
-      <p class="why-text">Osnovan 1994. godine, Auto Jablan je godinama izgrađivao reputaciju pouzdan servisa kojemu se Zagrepčani vraćaju.</p>
+<section class="why">
+  <div class="wrap">
+    <div class="why-head">
+      <div class="label rv">Zašto Auto Jablan</div>
+      <h2 class="h2 rv" style="--i:1">Vaše vozilo zaslužuje <em>najbolje.</em></h2>
+      <p class="lede rv" style="--i:2">Tri desetljeća iskustva, suvremena oprema i iskrena briga za svaki automobil koji dođe k nama.</p>
     </div>
-    <div class="why-item">
-      <div class="why-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
-      </div>
-      <div class="why-title">Ovlašteni Castrol Service</div>
-      <p class="why-text">Kao ovlašteni Castrol Service centar koristimo isključivo certificirana Castrol maziva i pridržavamo se najviših standarda servisiranja.</p>
-    </div>
-    <div class="why-item">
-      <div class="why-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z"/></svg>
-      </div>
-      <div class="why-title">Transparentne cijene</div>
-      <p class="why-text">Dobivate jasnu kalkulaciju prije svakog popravka, bez skrivenih troškova. Naša cijena je ona s kojom se slažete unaprijed.</p>
-    </div>
-    <div class="why-item">
-      <div class="why-icon-wrap">
-        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.75"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-      </div>
-      <div class="why-title">Brzi termini</div>
-      <p class="why-text">Poštujemo vaše vrijeme. Termini se dogovaraju fleksibilno, a popravci se završavaju u dogovorenom roku.</p>
+    <div class="why-row">
+      <div class="why-item rv"><div class="why-no">01</div><h3>32+ godina iskustva</h3><p>Osnovan 1994. godine, Auto Jablan je godinama izgrađivao reputaciju pouzdanog servisa kojemu se Zagrepčani vraćaju.</p></div>
+      <div class="why-item rv" style="--i:1"><div class="why-no">02</div><h3>Ovlašteni Castrol Service</h3><p>Kao ovlašteni Castrol Service centar koristimo isključivo certificirana Castrol maziva i pridržavamo se najviših standarda servisiranja.</p></div>
+      <div class="why-item rv" style="--i:2"><div class="why-no">03</div><h3>Transparentne cijene</h3><p>Dobivate jasnu kalkulaciju prije svakog popravka, bez skrivenih troškova. Naša cijena je ona s kojom se slažete unaprijed.</p></div>
+      <div class="why-item rv" style="--i:3"><div class="why-no">04</div><h3>Brzi termini</h3><p>Poštujemo vaše vrijeme. Termini se dogovaraju fleksibilno, a popravci se završavaju u dogovorenom roku.</p></div>
     </div>
   </div>
 </section>
 
-<!-- VIDEO -->
-<section id="galerija" style="padding:6rem 2rem;border-top:1px solid var(--border);background:var(--bg-dark);">
-  <div style="max-width:1200px;margin:0 auto;">
-    <div class="section-header" style="margin-bottom:2.5rem;">
-      <div class="section-eyebrow">Galerija</div>
-      <h2 class="section-title">Auto Jablan <span class="grad">u akciji</span></h2>
+<!-- GALLERY -->
+<section class="gallery" id="galerija">
+  <div class="wrap">
+    <div class="gal-head">
+      <div>
+        <div class="label rv">Galerija</div>
+        <h2 class="h2 rv" style="--i:1">Iz <em>radionice.</em></h2>
+      </div>
+      <a href="https://www.instagram.com/auto_jablan?utm_source=qr&igsh=eGh3aGh3dzNmcjJl" target="_blank" rel="noopener" class="tlink rv" style="--i:2">Više na Instagramu @auto_jablan &rarr;</a>
     </div>
-    <div style="columns:3;column-gap:1rem;line-height:0;">
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.39.59.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.40.56.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.23.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24%20%281%29.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24%20%282%29.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24%20%283%29.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-07%20at%2020.43.19%20%281%29.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-11%20at%2012.37.27.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-11%20at%2012.37.28.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <img src="material/WhatsApp%20Image%202026-05-11%20at%2012.37.28%20%281%29.jpeg" alt="Auto Jablan servis" loading="lazy" style="width:100%;display:block;object-fit:cover;">
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.22.mp4" controls muted playsinline style="width:100%;display:block;"></video>
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.22%20%281%29.mp4" controls muted playsinline style="width:100%;display:block;"></video>
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.23.mp4" controls muted playsinline style="width:100%;display:block;"></video>
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.23%20%281%29.mp4" controls muted playsinline style="width:100%;display:block;"></video>
-      </div>
-      <div class="gallery-item" style="break-inside:avoid;margin-bottom:1rem;border-radius:12px;overflow:hidden;border:1px solid var(--border);background:var(--bg-card);">
-        <video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.24.mp4" controls muted playsinline style="width:100%;display:block;"></video>
-      </div>
+    <div class="bento" id="bento">
+      <div class="tile w2 h2 rv"><button type="button" aria-label="Povećaj fotografiju"><img src="material/bmw-serija-5-servis.jpg" alt="Crni BMW serije 5 s otvorenim haubom u dvorištu radionice" loading="lazy"></button></div>
+      <div class="tile w2 h2 rv"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.43.19%20%281%29.jpeg" alt="ECU jedinica na stolu za programiranje, spojena na Flex uređaj" loading="lazy"></button></div>
+      <div class="tile h2 rv" style="--i:1"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24.jpeg" alt="Graf snage i momenta na laptopu, mjerenje performansi" loading="lazy"></button></div>
+      <div class="tile h2 rv" style="--i:2"><video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.22.mp4" controls muted playsinline preload="metadata"></video><span class="vid-tag">VIDEO</span></div>
+      <div class="tile w2 rv"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-11%20at%2012.37.27.jpeg" alt="Ulazi 1 do 4 u radionicu, Castrol Service natpisi" loading="lazy"></button></div>
+      <div class="tile rv" style="--i:1"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.39.59.jpeg" alt="Vizitka Auto Jablan autoservis" loading="lazy"></button></div>
+      <div class="tile rv" style="--i:2"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24%20%282%29.jpeg" alt="Laptop i Flex uređaj spojeni na Audi A6 tijekom remapa" loading="lazy"></button></div>
+      <div class="tile h2 rv"><video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.22%20%281%29.mp4" controls muted playsinline preload="metadata"></video><span class="vid-tag">VIDEO</span></div>
+      <div class="tile h2 rv" style="--i:1"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.23.jpeg" alt="Mjerenje ubrzanja 0-100 i 0-200 km/h uređajem na vjetrobranu" loading="lazy"></button></div>
+      <div class="tile w2 rv" style="--i:2"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24%20%283%29.jpeg" alt="ECU jedinica s kabelima na stolu, čitanje Bosch softvera" loading="lazy"></button></div>
+      <div class="tile h2 rv"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.40.56.jpeg" alt="AdBlue rješenje na Porsche Macan" loading="lazy"></button></div>
+      <div class="tile h2 rv" style="--i:1"><video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.23.mp4" controls muted playsinline preload="metadata"></video><span class="vid-tag">VIDEO</span></div>
+      <div class="tile w2 rv" style="--i:2"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-11%20at%2012.37.28.jpeg" alt="Parkiralište ispred radionice s autima klijenata" loading="lazy"></button></div>
+      <div class="tile h2 rv"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24%20%281%29.jpeg" alt="Mjerenje performansi mobitelom u Audiju" loading="lazy"></button></div>
+      <div class="tile h2 rv" style="--i:1"><video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.23%20%281%29.mp4" controls muted playsinline preload="metadata"></video><span class="vid-tag">VIDEO</span></div>
+      <div class="tile h2 rv" style="--i:2"><video src="material/WhatsApp%20Video%202026-05-07%20at%2020.42.24.mp4" controls muted playsinline preload="metadata"></video><span class="vid-tag">VIDEO</span></div>
+      <div class="tile w2 rv"><button type="button" aria-label="Povećaj fotografiju"><img src="material/WhatsApp%20Image%202026-05-11%20at%2012.37.28%20%281%29.jpeg" alt="Nova hala s ulazom 8 i dvorište radionice" loading="lazy"></button></div>
     </div>
   </div>
 </section>
 
-<style>
-@media(max-width:768px){#galerija [style*="columns:3"]{columns:2!important;}}
-@media(max-width:480px){#galerija [style*="columns:3"]{columns:1!important;}}
-.gallery-item img,.gallery-item video{transition:transform 0.3s;}
-.gallery-item:hover img,.gallery-item:hover video{transform:scale(1.02);}
-</style>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Pregled fotografije">
+  <button class="lb-btn lb-close" type="button" aria-label="Zatvori" onclick="closeLb()"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lb-btn lb-prev" type="button" aria-label="Prethodna" onclick="stepLb(-1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <button class="lb-btn lb-next" type="button" aria-label="Sljedeća" onclick="stepLb(1)"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 5l7 7-7 7"/></svg></button>
+  <div class="lb-count" id="lb-count"></div>
+</div>
 
 <!-- ABOUT -->
 <section class="about" id="o-nama">
-  <div class="about-inner">
-    <div class="about-text">
-      <div class="section-eyebrow">O nama</div>
-      <h2 class="section-title" style="margin-bottom:1.5rem;">Pouzdanost od<br><span class="grad">1994. godine</span></h2>
-      <p>Auto Jablan osnovan je 1994. godine u Zagrebu i od tada pruža vrhunske usluge servisiranja i popravka vozila. Više od tri desetljeća iskustva, stručan tim mehaničara i moderna dijagnostička oprema čine nas pouzdanim partnerom za vaše vozilo.</p>
-      <p>Ponosni smo na odnos povjerenja koji smo izgradili s tisućama klijenata u Zagrebu i okolici. Svako vozilo tretiramo s maksimalnom pažnjom i vraćamo ga tek kada smo 100% sigurni da je sigurno za vožnju.</p>
-      <div style="border-left:3px solid var(--yellow);padding:1rem 1.25rem;background:var(--bg-card);border-radius:0 10px 10px 0;margin-bottom:1.5rem;">
-        <div style="font-size:0.72rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--yellow);margin-bottom:0.5rem;">Misija</div>
-        <p style="margin-bottom:0;color:var(--muted);font-size:0.95rem;line-height:1.75;">Klijent je najbitniji, kao i njegova sigurnost tijekom vožnje. Nakon što izvršimo potrebne popravke na vašem automobilu, testiramo ga prije nego vam sa sigurnošću kažemo da smo uspješno obavili posao.</p>
-      </div>
-      <div class="castrol-badge">
-        <span class="castrol-badge-dot"></span>
-        <span>Ovlašteni <strong>Castrol Service</strong> centar</span>
-      </div>
-      <a href="#" class="btn-primary" onclick="openModal(event)" style="text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;">
-        Zakažite termin
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3"/></svg>
-      </a>
+  <div class="wrap about-grid">
+    <div class="about-media rv">
+      <div class="about-img"><img src="material/bmw-serija-5-servis.jpg" alt="Crni BMW serije 5 s otvorenim haubom u dvorištu radionice Auto Jablan" loading="lazy"></div>
+      <div class="about-img-2"><img src="material/WhatsApp%20Image%202026-05-07%20at%2020.42.24.jpeg" alt="Mjerenje performansi: graf snage i momenta na laptopu u autu" loading="lazy"></div>
     </div>
-    <div class="about-stats">
-      <div class="stat-card"><div class="stat-num">32+</div><div class="stat-label">Godina iskustva</div></div>
-      <div class="stat-card"><div class="stat-num">5000+</div><div class="stat-label">Zadovoljnih klijenata</div></div>
-      <div class="stat-card"><div class="stat-num">11+</div><div class="stat-label">Vrsta usluga</div></div>
-      <div class="stat-card"><div class="stat-num">24/7</div><div class="stat-label">Vuča vozila</div></div>
+    <div class="about-text">
+      <div class="label rv">O nama</div>
+      <h2 class="h2 rv" style="--i:1">Tri desetljeća u <em>istom dvorištu.</em></h2>
+      <p class="rv" style="--i:2">Auto Jablan radi od 1994. godine. Počeli smo kao mala mehaničarska radionica, a danas imamo više ulaza, vlastitu vučnu službu i opremu za dijagnostiku i remap motora.</p>
+      <p class="rv" style="--i:3">Većina ljudi dođe zbog jednog kvara i ostane godinama. Tome nema tajne: kažemo što ne valja, koliko košta i kad će biti gotovo.</p>
+      <blockquote class="pull rv" style="--i:4">Klijent je najbitniji, kao i njegova sigurnost tijekom vožnje. Nakon popravka auto testiramo, pa tek onda kažemo da je posao gotov.<cite>Naše pravilo</cite></blockquote>
+      <div class="castrol-line rv">Ovlašteni <b>Castrol Service</b> centar · Castrol Service Auto-Jablan d.o.o.</div>
+      <a href="#" class="btn rv" onclick="openModal(event)">
+        Naručite termin
+        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4"><path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12l-7.5 7.5M21 12H3"/></svg>
+      </a>
     </div>
   </div>
 </section>
 
 <!-- REVIEWS -->
 <section class="reviews" id="recenzije">
-  <div class="section-header">
-    <div class="section-eyebrow">Google recenzije</div>
-    <h2 class="section-title">Što kažu naši <span class="grad">klijenti</span></h2>
-    <p class="section-desc">Pogledajte što kažu klijenti koji nam vjeruju godinama.</p>
-  </div>
-  <div class="reviews-grid">
-    <div class="rev-card">
-      <div class="rev-stars">
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+  <div class="wrap">
+    <div class="label rv">Google recenzije</div>
+    <h2 class="h2 rv" style="--i:1">Što kažu ljudi <em>koji su bili kod nas.</em></h2>
+    <div class="rev-car rv" id="rev-car" aria-roledescription="vrtuljak" aria-label="Google recenzije">
+      <div class="rev-slides">
+        <figure class="rev-slide">
+          <div class="stars" aria-label="5 od 5 zvjezdica"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <blockquote>„Uz dobro obavljen posao bez čekanja (popravak ispušnog sustava), pristupačne cijene, ljubaznost i vedrina majstora Nene, gotovo da poželim novi kvar i dođem ponovo u taj servis. Moja preporuka!“</blockquote>
+          <figcaption class="who"><div class="av">EJ</div><div><div class="who-n">Edo Jakupak</div><div class="who-s"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google recenzija</div></div></figcaption>
+        </figure>
+        <figure class="rev-slide">
+          <div class="stars" aria-label="5 od 5 zvjezdica"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <blockquote>„Vrlo stručno obavljeno, brzina i ljubaznost na visokom nivou. Cijene pristupačne.“</blockquote>
+          <figcaption class="who"><div class="av">SD</div><div><div class="who-n">Senad Delalic</div><div class="who-s"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google recenzija</div></div></figcaption>
+        </figure>
+        <figure class="rev-slide">
+          <div class="stars" aria-label="5 od 5 zvjezdica"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <blockquote>„Želim iskreno pohvaliti Antonia iz vučne službe na vrhunskoj i profesionalnoj usluzi. Moj automobil je prvo bio u kvaru, a nakon toga je dodatno zapao u snijegu i bilo ga je potrebno izvući s parkinga i s vrlo nezgodnog mjesta. Antonio je sve to odradio mirno, sigurno i bez ikakve žurbe.“</blockquote>
+          <figcaption class="who"><div class="av">BD</div><div><div class="who-n">Borna Dolović</div><div class="who-s"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google recenzija</div></div></figcaption>
+        </figure>
+        <figure class="rev-slide">
+          <div class="stars" aria-label="5 od 5 zvjezdica"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <blockquote>„Pohvala, subotom napravili dijagnostiku bez čekanja.“</blockquote>
+          <figcaption class="who"><div class="av">SM</div><div><div class="who-n">Stanislav Mesarić</div><div class="who-s"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google recenzija</div></div></figcaption>
+        </figure>
+        <figure class="rev-slide">
+          <div class="stars" aria-label="5 od 5 zvjezdica"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <blockquote>„Tu se stvarno sve može dogovoriti oko servisa automobila. Cijena rada popularna. Ugradnja dijelova po tipu proizvođača uvijek po dogovoru.“</blockquote>
+          <figcaption class="who"><div class="av">ZH</div><div><div class="who-n">Zo Hol</div><div class="who-s"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google recenzija</div></div></figcaption>
+        </figure>
+        <figure class="rev-slide">
+          <div class="stars" aria-label="5 od 5 zvjezdica"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <blockquote>„Kvalitetno i brzo. Savjeti za održavanje vozila su stručni a opet razumljivi i za laika.“</blockquote>
+          <figcaption class="who"><div class="av">NP</div><div><div class="who-n">Nana Puc</div><div class="who-s"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>Google recenzija</div></div></figcaption>
+        </figure>
       </div>
-      <p class="rev-text">„Uz dobro obavljen posao bez čekanja (popravak ispušnog sustava), pristupačne cijene, ljubaznost i vedrina majstora Nene, gotovo da poželim novi kvar i dođem ponovo u taj servis. Moja preporuka!"</p>
-      <div class="rev-author">
-        <div class="rev-avatar">EJ</div>
-        <div>
-          <div class="rev-name">Edo Jakupak</div>
-          <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Google recenzija</div>
-        </div>
-      </div>
-    </div>
-    <div class="rev-card">
-      <div class="rev-stars">
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
-      <p class="rev-text">„Pohvala, subotom napravili dijagnostiku bez čekanja."</p>
-      <div class="rev-author">
-        <div class="rev-avatar">SM</div>
-        <div>
-          <div class="rev-name">Stanislav Mesarić</div>
-          <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Google recenzija</div>
-        </div>
-      </div>
-    </div>
-    <div class="rev-card">
-      <div class="rev-stars">
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-        <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-      </div>
-      <p class="rev-text">„Kvalitetno i brzo. Savjeti za održavanje vozila su stručni a opet razumljivi i za laika."</p>
-      <div class="rev-author">
-        <div class="rev-avatar">NP</div>
-        <div>
-          <div class="rev-name">Nana Puc</div>
-          <div class="rev-source"><svg viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg> Google recenzija</div>
+      <div class="rev-ctrl">
+        <div class="rev-dots" id="rev-dots" role="group" aria-label="Odaberi recenziju"></div>
+        <div class="rev-arrows">
+          <button class="rev-btn" type="button" id="rev-prev" aria-label="Prethodna recenzija"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M15 5l-7 7 7 7"/></svg></button>
+          <button class="rev-btn" type="button" id="rev-next" aria-label="Sljedeća recenzija"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 5l7 7-7 7"/></svg></button>
         </div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- CTA STRIP -->
-<div class="cta-strip">
-  <div class="cta-inner">
+<!-- CTA -->
+<section class="cta">
+  <div class="wrap cta-in">
     <div>
-      <div class="cta-label">Kontaktirajte nas</div>
-      <h2 class="cta-title">Spremi za rezervaciju?</h2>
-      <p class="cta-sub">Zakažite termin online ili nas nazovite. Odgovaramo brzo, bez čekanja. Besplatna procjena za sve usluge.</p>
+      <h2>Auto radi nešto čudno? Javite se prije nego postane skupo.</h2>
+      <p>Nazovite ili pošaljite upit. Procjenu dajemo besplatno, a termin dogovaramo brzo.</p>
     </div>
     <div class="cta-right">
-      <a href="#" class="btn-cta" onclick="openModal(event)">Zakažite termin</a>
-      <div class="cta-tel">ili nazovite <a href="tel:+385913441665">+385 91 344 1665</a></div>
+      <a href="tel:+385913441665" class="cta-tel">091 344 1665</a>
+      <a href="#" class="btn dark" onclick="openModal(event)">Naručite online</a>
     </div>
   </div>
-</div>
+</section>
 
 <!-- CONTACT -->
 <section class="contact" id="kontakt">
-  <div class="contact-wrap">
+  <div class="wrap contact-grid">
     <div class="contact-info">
-      <div class="contact-heading">
-        <div class="section-eyebrow">Pronađite nas</div>
-        <h2>Dođite u <span style="background:linear-gradient(90deg,var(--blue-light),var(--yellow));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;">Auto Jablan</span></h2>
-      </div>
-      <div>
-        <div class="ci-label">Adresa</div>
-        <div class="ci-value">VII Retkovec 1/1</div>
-        <div class="ci-sub">10000 Zagreb, Hrvatska</div>
-      </div>
-      <div>
-        <div class="ci-label">Telefon</div>
-        <div class="ci-value"><a href="tel:+385913441665" style="color:inherit;text-decoration:none;">+385 91 344 1665</a></div>
-      </div>
-      <div>
-        <div class="ci-label">E-mail</div>
-        <div class="ci-value"><a href="mailto:autojablan@gmail.com" style="color:inherit;text-decoration:none;">autojablan@gmail.com</a></div>
-      </div>
-      <div>
-        <div class="ci-label">Radno vrijeme</div>
-        <div class="ci-value">Pon do Pet: 08:00 do 17:00</div>
-        <div class="ci-sub">Sub: 08:00 do 12:00 &nbsp;·&nbsp; Ned: zatvoreno</div>
-      </div>
-      <a href="#" onclick="openModal(event)" class="btn-primary" style="text-decoration:none;display:inline-flex;justify-content:center;font-size:0.9rem;padding:0.75rem 1.5rem;margin-top:0.25rem;">Zakažite termin</a>
+      <div class="label rv">Kontakt</div>
+      <h2 class="h2 rv" style="--i:1">Retkovec, <em>VII. ulica.</em></h2>
+      <div class="ci rv"><div class="ci-k">Adresa</div><div class="ci-v">VII Retkovec 1/1<small>10000 Zagreb, Hrvatska</small></div></div>
+      <div class="ci rv"><div class="ci-k">Telefon</div><div class="ci-v"><a href="tel:+385913441665">+385 91 344 1665</a></div></div>
+      <div class="ci rv"><div class="ci-k">E-mail</div><div class="ci-v"><a href="mailto:autojablan@gmail.com">autojablan@gmail.com</a></div></div>
+      <div class="ci rv"><div class="ci-k">Radno vrijeme</div><div class="ci-v"><span class="mono">Pon do Pet 08:00 do 17:00</span><small>Subota 08:00 do 12:00 · Nedjelja zatvoreno</small></div></div>
+      <a href="#" class="btn rv" onclick="openModal(event)">Naručite termin</a>
     </div>
     <div class="contact-map">
-      <iframe
-        src="https://maps.google.com/maps?q=Castrol+Service+Auto-Jablan+d.o.o.+Zagreb&t=&z=16&ie=UTF8&iwloc=&output=embed"
-        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
-      </iframe>
+      <iframe title="Karta: Auto Jablan, VII Retkovec 1/1, Zagreb" src="https://maps.google.com/maps?q=Castrol+Service+Auto-Jablan+d.o.o.+Zagreb&t=&z=16&ie=UTF8&iwloc=&output=embed" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
     </div>
   </div>
 </section>
 
+</main>
+
 <!-- FOOTER -->
 <footer>
-  <div class="footer-grid">
-    <div class="footer-brand">
-      <a href="#" class="footer-logo">
-        <img src="autojablan-logo-removebg-preview.png" alt="Auto Jablan" style="height:52px;width:auto;display:block;">
-      </a>
-      <p class="footer-tagline">Vaš pouzdani autoservis u Zagrebu od 1994. godine. Ovlašteni Castrol Service centar.</p>
-      <div class="footer-social">
-        <a href="https://www.instagram.com/auto_jablan?utm_source=qr&igsh=eGh3aGh3dzNmcjJl" target="_blank" rel="noopener" aria-label="Instagram">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-        </a>
-        <a href="https://wa.me/385913441665" target="_blank" rel="noopener" aria-label="WhatsApp">
-          <svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
-        </a>
+  <div class="wrap">
+    <div class="foot-top">
+      <div>
+        <img src="autojablan-logo-removebg-preview.png" alt="Auto Jablan">
+        <p class="foot-tag">Castrol Service radionica u Retkovcu, Zagreb. Servis, dijagnostika i chip tuning od 1994.</p>
+        <div class="foot-social">
+          <a href="https://www.instagram.com/auto_jablan?utm_source=qr&igsh=eGh3aGh3dzNmcjJl" target="_blank" rel="noopener" aria-label="Instagram"><svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor" stroke="none"/></svg></a>
+          <a href="https://wa.me/385913441665" target="_blank" rel="noopener" aria-label="WhatsApp"><svg width="17" height="17" viewBox="0 0 24 24" fill="currentColor"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg></a>
+        </div>
+      </div>
+      <div class="foot-col">
+        <h3>Stranica</h3>
+        <ul>
+          <li><a href="#usluge">Usluge</a></li>
+          <li><a href="#chip-tuning">Chip tuning</a></li>
+          <li><a href="#cjenik">Cjenik</a></li>
+          <li><a href="#galerija">Galerija</a></li>
+          <li><a href="#o-nama">O nama</a></li>
+          <li><a href="#recenzije">Recenzije</a></li>
+          <li><a href="#" onclick="openModal(event)">Naručite termin</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <h3>Kontakt</h3>
+        <ul>
+          <li>VII Retkovec 1/1, 10000 Zagreb</li>
+          <li><a href="tel:+385913441665">+385 91 344 1665</a></li>
+          <li><a href="mailto:autojablan@gmail.com">autojablan@gmail.com</a></li>
+          <li>Pon do Pet 08:00 do 17:00</li>
+          <li>Sub 08:00 do 12:00</li>
+        </ul>
       </div>
     </div>
-    <div class="footer-col">
-      <h4>Navigacija</h4>
-      <ul>
-        <li><a href="#usluge">Usluge</a></li>
-        <li><a href="#o-nama">O nama</a></li>
-        <li><a href="#recenzije">Recenzije</a></li>
-        <li><a href="#kontakt">Kontakt</a></li>
-        <li><a href="#" onclick="openModal(event)">Zakažite termin</a></li>
-      </ul>
-    </div>
-    <div class="footer-col">
-      <h4>Kontakt</h4>
-      <address>
-        <span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 11-6 0 3 3 0 016 0z"/><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 7.142-7.5 11.25-7.5 11.25S4.5 17.642 4.5 10.5a7.5 7.5 0 1115 0z"/></svg>
-          VII Retkovec 1/1, 10000 Zagreb
-        </span>
-        <span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 002.25-2.25v-1.372c0-.516-.351-.966-.852-1.091l-4.423-1.106c-.44-.11-.902.055-1.173.417l-.97 1.293c-.282.376-.769.542-1.21.38a12.035 12.035 0 01-7.143-7.143c-.162-.441.004-.928.38-1.21l1.293-.97c.363-.271.527-.734.417-1.173L6.963 3.102a1.125 1.125 0 00-1.091-.852H4.5A2.25 2.25 0 002.25 4.5v2.25z"/></svg>
-          <a href="tel:+385913441665">+385 91 344 1665</a>
-        </span>
-        <span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;"><path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75"/></svg>
-          <a href="mailto:autojablan@gmail.com">autojablan@gmail.com</a>
-        </span>
-        <span>
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="flex-shrink:0;margin-top:2px;"><path stroke-linecap="round" stroke-linejoin="round" d="M12 6v6h4.5m4.5 0a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
-          Pon do Pet: 08:00 do 17:00<br>Sub: 08:00 do 12:00
-        </span>
-      </address>
-    </div>
-  </div>
-  <div class="footer-bottom">
-    <p>&copy; 2026 <strong>Auto Jablan</strong> · Sva prava pridržana. · Made by <a href="https://mikleos.eu" target="_blank" rel="noopener" style="color:var(--blue-light);text-decoration:none;transition:color 0.2s;" onmouseover="this.style.color='var(--white)'" onmouseout="this.style.color='var(--blue-light)'">Mikleos</a></p>
-    <div class="castrol-tag">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M11.48 3.499a.562.562 0 011.04 0l2.125 5.111a.563.563 0 00.475.345l5.518.442c.499.04.701.663.321.988l-4.204 3.602a.563.563 0 00-.182.557l1.285 5.385a.562.562 0 01-.84.61l-4.725-2.885a.563.563 0 00-.586 0L6.982 20.54a.562.562 0 01-.84-.61l1.285-5.386a.562.562 0 00-.182-.557l-4.204-3.602a.563.563 0 01.321-.988l5.518-.442a.563.563 0 00.475-.345L11.48 3.5z"/></svg>
-      Ovlašteni <span>Castrol Service</span> centar
+    <div class="foot-bot">
+      <p>&copy; 2026 Auto Jablan · Sva prava pridržana · Made by <a href="https://mikleos.eu" target="_blank" rel="noopener">Mikleos</a></p>
+      <p class="mono">Ovlašteni <b>Castrol Service</b> centar</p>
     </div>
   </div>
 </footer>
 
-<!-- WHATSAPP BUTTON -->
-<a href="https://wa.me/385913441665" target="_blank" rel="noopener" aria-label="WhatsApp" title="Pišite nam na WhatsApp" class="whatsapp-btn">
+<!-- WHATSAPP -->
+<a href="https://wa.me/385913441665" target="_blank" rel="noopener" aria-label="Pišite nam na WhatsApp" title="Pišite nam na WhatsApp" class="wa">
   <svg width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
 </a>
 
+<!-- TRAKA UPITA (pojavi se kad se doda usluga) -->
+<div class="upit-bar" id="upit-bar" role="region" aria-label="Odabrane usluge za upit">
+  <span class="ub-txt" aria-live="polite">U upitu<b id="ub-count">0</b><span class="ub-list" id="ub-list"></span></span>
+  <button type="button" class="btn" onclick="openModal(event)">Pošalji upit</button>
+  <button type="button" class="ub-clear" aria-label="Očisti odabir" onclick="ocistiUpit()"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+</div>
+
 <!-- BOOKING MODAL -->
-<div id="booking-modal" class="modal-wrap">
+<div id="booking-modal" class="modal-wrap" role="dialog" aria-modal="true" aria-labelledby="modal-title">
   <div class="modal-backdrop" onclick="closeModal()"></div>
   <div class="modal-card">
-    <div class="modal-topbar"></div>
     <div class="modal-head">
-      <div class="modal-head-text">
+      <div>
         <small>Auto Jablan</small>
-        <h3>Zakažite termin</h3>
-        <p>Ispunite obrazac i javimo se uskoro</p>
+        <h3 id="modal-title">Naručite termin</h3>
+        <p>Upit ide na naš WhatsApp, javimo se da potvrdimo termin.</p>
       </div>
-      <button class="modal-close" onclick="closeModal()">&times;</button>
+      <button class="modal-close" type="button" aria-label="Zatvori" onclick="closeModal()">&times;</button>
     </div>
-    <form class="modal-form" onsubmit="submitForm(event)">
+    <form class="modal-form" id="booking-form" novalidate onsubmit="submitForm(event)">
       <div class="form-row">
-        <div class="form-group">
-          <label>Ime i prezime *</label>
-          <input required type="text" placeholder="npr. Ivan Horvat">
+        <div class="fg">
+          <label for="f-name">Ime i prezime *</label>
+          <input id="f-name" required type="text" autocomplete="name" placeholder="npr. Ivan Horvat">
+          <span class="err">Upišite ime da znamo koga zovemo.</span>
         </div>
-        <div class="form-group">
-          <label>Telefon *</label>
-          <input required type="tel" placeholder="+385 9X XXX XXXX">
+        <div class="fg">
+          <label for="f-tel">Telefon *</label>
+          <input id="f-tel" required type="tel" autocomplete="tel" placeholder="+385 9X XXX XXXX" pattern="[0-9+ /()-]{6,}">
+          <span class="err">Upišite broj na koji vas možemo nazvati.</span>
         </div>
       </div>
-      <div class="form-group">
-        <label>E-mail</label>
-        <input type="email" placeholder="vasa@email.com">
+      <div class="fg">
+        <label for="f-mail">E-mail</label>
+        <input id="f-mail" type="email" autocomplete="email" placeholder="vasa@email.com">
+        <span class="err">Ovo ne izgleda kao ispravna e-mail adresa.</span>
       </div>
-      <div class="form-group">
-        <label>Usluga *</label>
-        <select required>
-          <option value="" disabled selected>Odaberite uslugu...</option>
-          <option>Automehanika</option>
-          <option>Autoelektrika</option>
-          <option>Auto klime</option>
-          <option>Profesionalna dijagnostika</option>
-          <option>Optika kotača</option>
-          <option>Vučna služba</option>
-          <option>Vulkanizacija</option>
-          <option>Chip tuning / Remap motora</option>
-          <option>Adblue / DPF / EGR rješenja</option>
-          <option>Ostalo</option>
-        </select>
+      <fieldset class="fg" id="f-svc-group">
+        <legend>Usluge</legend>
+        <span class="hint">Odaberite jednu ili više, ili samo opišite kvar ispod.</span>
+        <div class="chip-group" id="f-svc-chips"></div>
+        <span class="err">Odaberite barem jednu uslugu ili ukratko opišite kvar.</span>
+      </fieldset>
+      <div class="fg">
+        <label for="f-date">Željeni datum</label>
+        <input id="f-date" type="date">
       </div>
-      <div class="form-group">
-        <label>Željeni datum</label>
-        <input type="date">
+      <div class="fg">
+        <label for="f-msg">Poruka / opis kvara</label>
+        <textarea id="f-msg" rows="3" placeholder="Marka, model i što se događa s autom"></textarea>
       </div>
-      <div class="form-group">
-        <label>Poruka / opis kvara</label>
-        <textarea rows="3" placeholder="Opišite problem ili uslugu koju trebate..."></textarea>
-      </div>
-      <button type="submit" id="modal-submit-btn" class="btn-submit">Pošaljite zahtjev</button>
-      <p class="modal-fine">Ili nas nazovite direktno: <a href="tel:+385913441665">+385 91 344 1665</a></p>
+      <button type="submit" id="modal-submit-btn" class="btn">Pošaljite zahtjev</button>
+      <p class="modal-fine">Ili nas nazovite: <a href="tel:+385913441665">+385 91 344 1665</a></p>
     </form>
     <div class="modal-success" id="modal-success">
-      <div class="success-icon">
-        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2.5"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>
-      </div>
-      <h3>Zahtjev poslan!</h3>
-      <p>Hvala! Kontaktirat ćemo vas uskoro kako bismo potvrdili vaš termin.</p>
-      <button onclick="closeModal()" class="btn-close-success">Zatvori</button>
+      <h3><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#F5C518" stroke-width="2.6" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7"/></svg>Upit je spreman u WhatsAppu.</h3>
+      <p>Pošaljite poruku u WhatsAppu i javit ćemo vam se da potvrdimo termin.</p>
+      <button type="button" onclick="closeModal()" class="btn">Zatvori</button>
     </div>
   </div>
 </div>
 
 <script>
-function openModal(e) {
+/* ── upit: odabrane usluge (kao Mac Auto upit.js) ── */
+const odabrano = [];
+const chipBox = document.getElementById('f-svc-chips');
+// čipovi u obrascu nastaju iz redova usluga, pa je svaki naziv usluge zapisan samo jednom
+[...document.querySelectorAll('#usluge [data-pod]')].map(b => b.dataset.pod).concat('Ostalo').forEach(n => {
+  const b = document.createElement('button');
+  b.type = 'button'; b.className = 'chip'; b.dataset.pod = n; b.textContent = n;
+  b.setAttribute('aria-pressed', 'false');
+  chipBox.appendChild(b);
+});
+function modalOpen() { return document.getElementById('booking-modal').classList.contains('open'); }
+function crtajUpit() {
+  document.querySelectorAll('[data-pod]').forEach(b => b.setAttribute('aria-pressed', String(odabrano.includes(b.dataset.pod))));
+  document.querySelectorAll('#usluge .svc').forEach(r => {
+    const b = r.querySelector('[data-pod]');
+    r.classList.toggle('picked', !!b && odabrano.includes(b.dataset.pod));
+  });
+  document.getElementById('ub-count').textContent = odabrano.length;
+  document.getElementById('ub-list').textContent = odabrano.join(', ');
+  document.getElementById('upit-bar').classList.toggle('show', odabrano.length > 0 && !modalOpen());
+  if (odabrano.length) document.getElementById('f-svc-group').classList.remove('bad');
+}
+function prebaciUslugu(n) {
+  const i = odabrano.indexOf(n);
+  if (i > -1) odabrano.splice(i, 1); else odabrano.push(n);
+  crtajUpit();
+}
+function dodajUslugu(n) { if (!odabrano.includes(n)) odabrano.push(n); crtajUpit(); }
+function ocistiUpit() { odabrano.length = 0; crtajUpit(); }
+document.addEventListener('click', e => {
+  const b = e.target.closest ? e.target.closest('[data-pod]') : null;
+  if (!b) return;
+  e.preventDefault();
+  prebaciUslugu(b.dataset.pod);
+});
+
+/* ── modal ── */
+function openModal(e, service) {
   if (e) e.preventDefault();
   const m = document.getElementById('booking-modal');
-  m.style.display = 'flex';
+  m.classList.add('open');
   document.body.style.overflow = 'hidden';
+  if (service) dodajUslugu(service); else crtajUpit();
+  setTimeout(() => document.getElementById('f-name').focus(), 50);
 }
 function closeModal() {
   const m = document.getElementById('booking-modal');
-  m.style.display = 'none';
+  if (!m.classList.contains('open')) return;
+  m.classList.remove('open');
   document.body.style.overflow = '';
   document.getElementById('modal-success').style.display = 'none';
-  const f = m.querySelector('form');
+  const f = document.getElementById('booking-form');
   f.style.display = 'flex';
+  f.querySelectorAll('.fg.bad').forEach(g => g.classList.remove('bad'));
   const btn = document.getElementById('modal-submit-btn');
   btn.textContent = 'Pošaljite zahtjev';
   btn.disabled = false;
-  btn.style.opacity = '1';
+  crtajUpit();
 }
 function submitForm(e) {
   e.preventDefault();
   const form = e.target;
-  const name    = form.querySelector('input[type="text"]').value;
-  const phone   = form.querySelector('input[type="tel"]').value;
-  const email   = form.querySelector('input[type="email"]').value;
-  const service = form.querySelector('select').value;
-  const date    = form.querySelector('input[type="date"]').value;
-  const message = form.querySelector('textarea').value;
+  let firstBad = null;
+  form.querySelectorAll('input').forEach(el => {
+    const g = el.closest('.fg');
+    const ok = el.checkValidity();
+    g.classList.toggle('bad', !ok);
+    if (!ok && !firstBad) firstBad = el;
+  });
+  const message = document.getElementById('f-msg').value.trim();
+  const svcOk = odabrano.length > 0 || message !== '';
+  document.getElementById('f-svc-group').classList.toggle('bad', !svcOk);
+  if (!svcOk && !firstBad) firstBad = chipBox.querySelector('.chip');
+  if (firstBad) { firstBad.focus(); return; }
+
+  const name  = document.getElementById('f-name').value;
+  const phone = document.getElementById('f-tel').value;
+  const email = document.getElementById('f-mail').value;
+  const date  = document.getElementById('f-date').value;
 
   let text = `Novi zahtjev za termin:\n`;
   text += `Ime: ${name}\n`;
   text += `Telefon: ${phone}\n`;
   if (email) text += `E-mail: ${email}\n`;
-  text += `Usluga: ${service}\n`;
+  text += `Usluge: ${odabrano.length ? odabrano.join(', ') : 'nije odabrano, vidi poruku'}\n`;
   if (date) text += `Željeni datum: ${date}\n`;
   if (message) text += `Poruka: ${message}`;
 
   const waUrl = `https://wa.me/385913441665?text=${encodeURIComponent(text)}`;
-
   const btn = document.getElementById('modal-submit-btn');
-  btn.textContent = 'Slanje...';
+  btn.textContent = 'Otvaram WhatsApp...';
   btn.disabled = true;
-  btn.style.opacity = '0.6';
 
   setTimeout(() => {
     window.open(waUrl, '_blank');
-    document.querySelector('#booking-modal form').style.display = 'none';
+    form.style.display = 'none';
     document.getElementById('modal-success').style.display = 'block';
-  }, 600);
+    odabrano.length = 0;
+    crtajUpit();
+  }, 500);
 }
+document.getElementById('booking-form').addEventListener('input', e => {
+  const g = e.target.closest('.fg');
+  if (g && g.classList.contains('bad') && e.target.checkValidity()) g.classList.remove('bad');
+  if (e.target.id === 'f-msg' && e.target.value.trim()) document.getElementById('f-svc-group').classList.remove('bad');
+});
 
+/* ── recenzije: vrtuljak (kao Mac Auto) ── */
+(function () {
+  const car = document.getElementById('rev-car');
+  if (!car) return;
+  const slides = [...car.querySelectorAll('.rev-slide')];
+  const dotsBox = document.getElementById('rev-dots');
+  car.classList.add('js-car');
+  let sada = 0;
+  const dots = slides.map((sl, i) => {
+    sl.setAttribute('role', 'group');
+    sl.setAttribute('aria-roledescription', 'recenzija');
+    sl.setAttribute('aria-label', (i + 1) + ' od ' + slides.length);
+    const d = document.createElement('button');
+    d.type = 'button'; d.className = 'rev-dot';
+    d.setAttribute('aria-label', 'Recenzija ' + (i + 1) + ', ' + sl.querySelector('.who-n').textContent);
+    d.addEventListener('click', () => idi(i));
+    dotsBox.appendChild(d);
+    return d;
+  });
+  function idi(i) {
+    sada = (i + slides.length) % slides.length;
+    slides.forEach((sl, n) => {
+      const on = n === sada;
+      sl.classList.toggle('aktivan', on);
+      sl.setAttribute('aria-hidden', String(!on));
+      sl.inert = !on;
+    });
+    dots.forEach((d, n) => d.setAttribute('aria-current', String(n === sada)));
+  }
+  // traka ispod aktivne točke puni se CSS animacijom, a kad se napuni ide sljedeća recenzija
+  dotsBox.addEventListener('animationend', e => {
+    if (e.animationName === 'rev-fill' && e.target === dots[sada]) idi(sada + 1);
+  });
+  document.getElementById('rev-prev').addEventListener('click', () => idi(sada - 1));
+  document.getElementById('rev-next').addEventListener('click', () => idi(sada + 1));
+  car.addEventListener('keydown', e => {
+    if (e.key === 'ArrowRight') idi(sada + 1);
+    if (e.key === 'ArrowLeft') idi(sada - 1);
+  });
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) car.classList.add('rucno');
+
+  let mis = false, fokus = false, vidljiv = true;
+  const pauza = () => car.classList.toggle('pauza', mis || fokus || !vidljiv);
+  car.addEventListener('mouseenter', () => { mis = true; pauza(); });
+  car.addEventListener('mouseleave', () => { mis = false; pauza(); });
+  car.addEventListener('focusin', () => { fokus = true; pauza(); });
+  car.addEventListener('focusout', e => { if (!car.contains(e.relatedTarget)) { fokus = false; pauza(); } });
+  new IntersectionObserver(([en]) => { vidljiv = en.isIntersecting; pauza(); }, { threshold: 0.3 }).observe(car);
+
+  let startX = null;
+  car.addEventListener('touchstart', e => { startX = e.touches[0].clientX; }, { passive: true });
+  car.addEventListener('touchend', e => {
+    if (startX === null) return;
+    const dx = e.changedTouches[0].clientX - startX;
+    if (Math.abs(dx) > 50) idi(sada + (dx < 0 ? 1 : -1));
+    startX = null;
+  });
+  idi(0);
+})();
+
+/* ── mobile menu ── */
 function toggleMenu() {
   const menu = document.getElementById('mobile-menu');
   const btn = document.getElementById('hamburger');
-  menu.classList.toggle('open');
-  btn.classList.toggle('open');
-  document.body.style.overflow = menu.classList.contains('open') ? 'hidden' : '';
+  const open = menu.classList.toggle('open');
+  btn.classList.toggle('open', open);
+  btn.setAttribute('aria-expanded', open);
+  document.body.style.overflow = open ? 'hidden' : '';
 }
 function closeMenu() {
   document.getElementById('mobile-menu').classList.remove('open');
-  document.getElementById('hamburger').classList.remove('open');
+  const btn = document.getElementById('hamburger');
+  btn.classList.remove('open');
+  btn.setAttribute('aria-expanded', 'false');
   document.body.style.overflow = '';
 }
-document.addEventListener('keydown', e => { if (e.key === 'Escape') { closeModal(); closeMenu(); } });
+
+/* ── lightbox ── */
+const lbImgs = [...document.querySelectorAll('#bento img')];
+let lbIdx = 0;
+function showLb(i) {
+  lbIdx = (i + lbImgs.length) % lbImgs.length;
+  const src = lbImgs[lbIdx];
+  let img = document.getElementById('lb-img');
+  if (!img) { img = document.createElement('img'); img.id = 'lb-img'; document.getElementById('lightbox').prepend(img); }
+  img.src = src.currentSrc || src.src;
+  img.alt = src.alt;
+  document.getElementById('lb-count').textContent = String(lbIdx + 1).padStart(2, '0') + ' / ' + String(lbImgs.length).padStart(2, '0');
+}
+function openLb(i) {
+  showLb(i);
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  document.querySelector('.lb-close').focus();
+}
+function closeLb() {
+  const lb = document.getElementById('lightbox');
+  if (!lb.classList.contains('open')) return;
+  lb.classList.remove('open');
+  document.body.style.overflow = '';
+  lbImgs[lbIdx].closest('button').focus();
+}
+function stepLb(d) { showLb(lbIdx + d); }
+lbImgs.forEach((img, i) => img.closest('button').addEventListener('click', () => openLb(i)));
+document.getElementById('lightbox').addEventListener('click', e => { if (e.target.id === 'lightbox') closeLb(); });
+
+document.addEventListener('keydown', e => {
+  const lbOpen = document.getElementById('lightbox').classList.contains('open');
+  if (e.key === 'Escape') { closeLb(); closeModal(); closeMenu(); }
+  if (lbOpen && e.key === 'ArrowRight') stepLb(1);
+  if (lbOpen && e.key === 'ArrowLeft') stepLb(-1);
+});
+
+/* ── load + reveals + nav state ── */
+requestAnimationFrame(() => document.documentElement.classList.add('loaded'));
+
+const rvIO = new IntersectionObserver(entries => {
+  entries.forEach(en => { if (en.isIntersecting) { en.target.classList.add('in'); rvIO.unobserve(en.target); } });
+}, { threshold: 0.12, rootMargin: '0px 0px -40px 0px' });
+document.querySelectorAll('.rv').forEach(el => rvIO.observe(el));
+
+const nav = document.getElementById('nav');
+// traka postane puna čim se stranica pomakne s vrha, da sadržaj ne ide ispod prozirnog izbornika
+new IntersectionObserver(([en]) => nav.classList.toggle('solid', !en.isIntersecting))
+  .observe(document.getElementById('nav-sentinel'));
+
+/* ── mobile video autoplay (kao na živoj stranici) ── */
+if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
+  const vIO = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.play().catch(() => {}); else e.target.pause(); });
+  }, { threshold: 0.5 });
+  document.querySelectorAll('video').forEach(v => vIO.observe(v));
+}
 </script>
 
+<!-- CJENIK: tablica iz cjenik.js (CSV datoteke radi generiraj-cjenik.js iz istog izvora) -->
+<script src="cjenik.js?v=2"></script>
 <script>
-if ('ontouchstart' in window || navigator.maxTouchPoints > 0) {
-  const observer = new IntersectionObserver((entries) => {
-    entries.forEach(e => {
-      if (e.isIntersecting) e.target.play();
-      else e.target.pause();
+(function () {
+  const data = window.CJENIK;
+  const fail = () => {
+    document.getElementById('price-body').innerHTML = '<tr role="row"><td colspan="3" role="cell" class="quote"><span class="p-quote">Cjenik se nije učitao. Osvježite stranicu ili <a class="tlink" href="cjenik.csv" download>preuzmite cjenik (CSV)</a>.</span></td></tr>';
+  };
+  // stara (keširana) verzija cjenik.js bez funkcije retail ne smije prikazati krive cijene
+  if (!data || !Array.isArray(data.items) || typeof data.retail !== 'function') { fail(); return; }
+  try {
+
+  // stavka bez valjanih cijena se nikad ne prikazuje s lažnom cijenom
+  const isFixed = it => it.priceType === 'fixed' && Number.isFinite(it.currentPrice) && Number.isFinite(it.anchorPrice);
+  const money = new Intl.NumberFormat('hr-HR', { style: 'currency', currency: data.currency || 'EUR' });
+  const esc = v => String(v).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const QUOTE_TEXT = 'Cijena prema ponudi nakon pregleda vozila';
+
+  data.items.forEach(it => {
+    if (it.priceType === 'fixed' && !isFixed(it)) console.warn('Cjenik: stavka "' + it.name + '" nema ispravne cijene, prikazuje se kao ponuda.');
+  });
+
+  // tablica
+  document.getElementById('price-body').innerHTML = data.items.map(it => {
+    const UNITS = { sat: 'po satu', kom: 'po komadu' };
+    const sub = [it.unit && it.unit !== 'usluga' ? (UNITS[it.unit] || 'po jedinici: ' + it.unit) : '', it.note || ''].filter(Boolean).join(' · ');
+    const head = '<th scope="row" role="rowheader">' + esc(it.name) + (sub ? '<small>' + esc(sub) + '</small>' : '') + '</th>';
+    if (!isFixed(it)) return '<tr role="row">' + head + '<td colspan="2" role="cell" class="num quote"><span class="p-quote">' + QUOTE_TEXT + '</span></td></tr>';
+    return '<tr role="row">' + head +
+      '<td role="cell" class="num" data-label="Cijena"><span><span class="p-now">' + money.format(data.retail(it.currentPrice)) + '</span>' +
+        (it.specialSale ? '<span class="p-sale">' + esc(it.specialSale) + '</span>' : '') + '</span></td>' +
+      '<td role="cell" class="num" data-label="Sidrena cijena"><span class="p-anchor">' + money.format(data.retail(it.anchorPrice)) + '</span></td></tr>';
+  }).join('');
+
+  document.querySelectorAll('.js-anchor-date').forEach(el => { el.textContent = data.anchorDate; });
+  document.querySelectorAll('.js-anchor-paren').forEach(el => { el.textContent = '(' + data.anchorDate + ')'; });
+  document.getElementById('price-draft').hidden = !data.placeholder;
+  } catch (e) { console.error('Cjenik:', e); fail(); }
+
+  // CSV se ne generira ovdje: datoteke radi generiraj-cjenik.js iz istog cjenik.js
+})();
+</script>
+
+<!-- DYNO -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+(function () {
+  // Primjer krivulja za 2.0 TDI 150 KS. Snaga se računa iz momenta (KS = Nm * o/min / 7121).
+  const RPM = [1000, 1250, 1500, 1750, 2000, 2500, 3000, 3500, 3750, 4000, 4500, 5000];
+  const NM_S = [240, 290, 330, 340, 340, 340, 335, 305, 285, 262, 205, 150];
+  const NM_T = [255, 320, 375, 400, 400, 398, 388, 375, 350, 325, 255, 175];
+  const X0 = 50, X1 = 570, Y0 = 310, Y1 = 24, KS_MAX = 240, NM_MAX = 480;
+
+  const X = r => X0 + (r - RPM[0]) / (RPM[RPM.length - 1] - RPM[0]) * (X1 - X0);
+  const Yk = v => Y0 - v / KS_MAX * (Y0 - Y1);
+  const Yn = v => Y0 - v / NM_MAX * (Y0 - Y1);
+  const ks = (nm, r) => nm * r / 7121;
+  const lerp = (arr, r) => {
+    if (r <= RPM[0]) return arr[0];
+    for (let i = 1; i < RPM.length; i++) {
+      if (r <= RPM[i]) { const t = (r - RPM[i - 1]) / (RPM[i] - RPM[i - 1]); return arr[i - 1] + (arr[i] - arr[i - 1]) * t; }
+    }
+    return arr[arr.length - 1];
+  };
+  // Catmull-Rom u glatki bezier
+  const smooth = pts => {
+    let d = `M${pts[0][0].toFixed(1)},${pts[0][1].toFixed(1)}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[i - 1] || pts[i], p1 = pts[i], p2 = pts[i + 1], p3 = pts[i + 2] || p2;
+      const c1 = [p1[0] + (p2[0] - p0[0]) / 6, p1[1] + (p2[1] - p0[1]) / 6];
+      const c2 = [p2[0] - (p3[0] - p1[0]) / 6, p2[1] - (p3[1] - p1[1]) / 6];
+      d += ` C${c1[0].toFixed(1)},${c1[1].toFixed(1)} ${c2[0].toFixed(1)},${c2[1].toFixed(1)} ${p2[0].toFixed(1)},${p2[1].toFixed(1)}`;
+    }
+    return d;
+  };
+  const kwPts = nm => RPM.map((r, i) => [X(r), Yk(ks(nm[i], r))]);
+  const nmPts = nm => RPM.map((r, i) => [X(r), Yn(nm[i])]);
+  const $ = id => document.getElementById(id);
+
+  // osi
+  const NS = 'http://www.w3.org/2000/svg';
+  const axes = $('axes');
+  const el = (tag, attrs, txt) => { const n = document.createElementNS(NS, tag); for (const k in attrs) n.setAttribute(k, attrs[k]); if (txt != null) n.textContent = txt; axes.appendChild(n); };
+  for (let i = 0; i <= 4; i++) {
+    const y = Y0 - i / 4 * (Y0 - Y1);
+    el('line', { x1: X0, x2: X1, y1: y, y2: y, stroke: i ? 'rgba(226,232,240,.07)' : 'rgba(226,232,240,.2)' });
+    el('text', { x: X0 - 8, y: y + 3, 'text-anchor': 'end' }, KS_MAX / 4 * i);
+    el('text', { x: X1 + 8, y: y + 3 }, NM_MAX / 4 * i);
+  }
+  for (let r = 1000; r <= 5000; r += 1000) el('text', { x: X(r), y: Y0 + 18, 'text-anchor': 'middle' }, r);
+  el('text', { x: X0 - 8, y: Y1 - 10, 'text-anchor': 'end' }, 'KS');
+  el('text', { x: X1 + 8, y: Y1 - 10 }, 'Nm');
+  el('text', { x: X1, y: Y0 + 34, 'text-anchor': 'end' }, 'o/min');
+
+  $('st-kw').setAttribute('d', smooth(kwPts(NM_S)));
+  $('st-nm').setAttribute('d', smooth(nmPts(NM_S)));
+  const tk = smooth(kwPts(NM_T));
+  $('tu-kw').setAttribute('d', tk);
+  $('tu-nm').setAttribute('d', smooth(nmPts(NM_T)));
+  $('tu-fill').setAttribute('d', `${tk} L${X1},${Y0} L${X0},${Y0} Z`);
+
+  // vrhovi za delta oznake
+  let pkS = 0, pkT = 0;
+  for (let r = 1000; r <= 5000; r += 25) { pkS = Math.max(pkS, ks(lerp(NM_S, r), r)); pkT = Math.max(pkT, ks(lerp(NM_T, r), r)); }
+  const nmS = Math.max(...NM_S), nmT = Math.max(...NM_T);
+  $('d-kw').textContent = '+' + Math.round((pkT / pkS - 1) * 100) + '%';
+  $('d-nm').textContent = '+' + Math.round((nmT / nmS - 1) * 100) + '%';
+
+  const section = document.querySelector('.dyno');
+  const rect = $('reveal-rect'), scan = $('scan'), dk = $('dot-kw'), dn = $('dot-nm');
+  const oRpm = $('ro-rpm'), oKw = $('ro-kw'), oNm = $('ro-nm'), oKwS = $('ro-kw-s'), oNmS = $('ro-nm-s');
+
+  function render(p) {
+    p = Math.max(0, Math.min(1, p));
+    const r = 1000 + p * 4000, x = X(r);
+    rect.setAttribute('width', x);
+    scan.setAttribute('x1', x); scan.setAttribute('x2', x);
+    const nT = lerp(NM_T, r), nS = lerp(NM_S, r);
+    dk.setAttribute('cx', x); dk.setAttribute('cy', Yk(ks(nT, r)));
+    dn.setAttribute('cx', x); dn.setAttribute('cy', Yn(nT));
+    // na kraju prikaži vršne vrijednosti umjesto trenutnih na 5000 o/min
+    const end = p >= 0.995;
+    oRpm.textContent = end ? 'max' : Math.round(r / 50) * 50;
+    oKw.textContent = Math.round(end ? pkT : ks(nT, r));
+    oNm.textContent = Math.round(end ? nmT : nT);
+    oKwS.textContent = Math.round(end ? pkS : ks(nS, r));
+    oNmS.textContent = Math.round(end ? nmS : nS);
+    scan.style.opacity = end ? 0 : 1;
+    section.classList.toggle('done', end);
+  }
+
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce) { render(1); return; }
+  render(0);
+
+  const playOnce = () => {
+    const io = new IntersectionObserver(([en]) => {
+      if (!en.isIntersecting) return;
+      io.disconnect();
+      const t0 = performance.now(), dur = 2600;
+      const tick = now => { const t = Math.min(1, (now - t0) / dur); render(1 - Math.pow(1 - t, 3)); if (t < 1) requestAnimationFrame(tick); };
+      requestAnimationFrame(tick);
+    }, { threshold: 0.45 });
+    io.observe(document.querySelector('.dyno-panel'));
+  };
+
+  if (!window.gsap || !window.ScrollTrigger) { playOnce(); return; }
+  gsap.registerPlugin(ScrollTrigger);
+  const state = { p: 0 };
+  const mm = gsap.matchMedia();
+  mm.add('(min-width: 901px) and (min-height: 640px)', () => {
+    // pin samo kad cijeli blok stane na ekran, inače se sadržaj odreže
+    if (document.querySelector('.dyno-grid').offsetHeight + 90 > innerHeight) { playOnce(); return; }
+    state.p = 0; render(0);
+    gsap.to(state, {
+      p: 1, ease: 'none', onUpdate: () => render(state.p),
+      scrollTrigger: { trigger: '.dyno-pin', start: 'top top', end: '+=1300', scrub: 0.6, pin: true, anticipatePin: 1 }
     });
-  }, { threshold: 0.5 });
-  document.querySelectorAll('video').forEach(v => observer.observe(v));
-}
+  });
+  mm.add('(max-width: 900px), (max-height: 639px)', () => { playOnce(); });
+
+  // fontovi i slike mijenjaju visinu sekcija iznad, pa se pozicija pina mora preračunati
+  const refresh = () => ScrollTrigger.refresh();
+  if (document.fonts) document.fonts.ready.then(refresh);
+  window.addEventListener('load', refresh);
+})();
 </script>
 </body>
 </html>

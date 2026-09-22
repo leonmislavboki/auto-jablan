@@ -1,0 +1,6 @@
+naziv_usluge,trenutna_cijena,sidrena_cijena,valuta,jedinica_mjere,poseban_oblik_prodaje,naziv_posebnog_oblika_prodaje,datum_sidrene_cijene,pdv_ukljucen,napomena
+Rad na vozilu,56.25,56.25,EUR,sat,NE,,10.09.2026,DA,
+Rad s dijagnostikom,62.50,62.50,EUR,sat,NE,,10.09.2026,DA,
+"Montaža, demontaža i balansiranje gume",18.75,18.75,EUR,kom,NE,,10.09.2026,DA,Cijena ovisi o veličini felge
+Špur (geometrija kotača),62.50,62.50,EUR,usluga,NE,,10.09.2026,DA,
+Punjenje klime,62.50,62.50,EUR,usluga,NE,,10.09.2026,DA,

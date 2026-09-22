@@ -1,0 +1,18 @@
+# Cloudflare Pages: cjenik mora biti dostupan alatima za automatsko prikupljanje cijena (NN 101/2026, točka VII)
+/cjenik.csv
+  Content-Type: text/csv; charset=utf-8
+  Cache-Control: no-cache
+  Access-Control-Allow-Origin: *
+
+/cjenik/*
+  Access-Control-Allow-Origin: *
+  Cache-Control: no-cache
+
+/cjenik/*.csv
+  Content-Type: text/csv; charset=utf-8
+
+/cjenik.js
+  Cache-Control: no-cache
+
+/generiraj-cjenik.js
+  X-Robots-Tag: noindex
